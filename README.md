@@ -13,7 +13,7 @@
 
 <h2><span class="mw-headline" id="Description">Wikipedia description</span></h2>
 
-<p>The game is played on four <a href="/wiki/Grid_(spatial_index)" title="Grid (spatial index)">grids</a>, two for each player. The grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. On
+<p>The game is played on four <a href="https://en.wikipedia.org/wiki/Grid_(spatial_index)" title="Grid (spatial index)">grids</a>, two for each player. The grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. On
     one grid the player arranges ships and records the shots by the opponent. On the other grid the player records his/her own shots.</p>
 <p>Before play begins, each player secretly arranges their ships on their primary grid. Each ship occupies a number of consecutive squares on the grid, arranged either horizontally or vertically. The number of squares for each ship is determined by the type
     of the ship. The ships cannot overlap (i.e., only one ship can occupy any given square in the grid). The types and numbers of ships allowed are the same for each player. These may vary depending on the rules.</p>
@@ -24,23 +24,23 @@
         <th>Size</th>
     </tr>
     <tr>
-        <td><a href="/wiki/Aircraft_carrier" title="Aircraft carrier">Aircraft carrier</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Aircraft_carrier" title="Aircraft carrier">Aircraft carrier</a></td>
         <td style="text-align:center;">5</td>
     </tr>
     <tr>
-        <td><a href="/wiki/Battleship" title="Battleship">Battleship</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Battleship" title="Battleship">Battleship</a></td>
         <td style="text-align:center;">4</td>
     </tr>
     <tr>
-        <td><a href="/wiki/Submarine" title="Submarine">Submarine</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Submarine" title="Submarine">Submarine</a></td>
         <td style="text-align:center;">3</td>
     </tr>
     <tr>
-        <td><a href="/wiki/Destroyer" title="Destroyer">Destroyer</a> (or <a href="/wiki/Cruiser" title="Cruiser">Cruiser</a>)</td>
+        <td><a href="https://en.wikipedia.org/wiki/Destroyer" title="Destroyer">Destroyer</a> (or <a href="https://en.wikipedia.org/wiki/Cruiser" title="Cruiser">Cruiser</a>)</td>
         <td style="text-align:center;">3</td>
     </tr>
     <tr>
-        <td><a href="/wiki/Patrol_boat" title="Patrol boat">Patrol boat</a> (or destroyer)</td>
+        <td><a href="https://en.wikipedia.org/wiki/Patrol_boat" title="Patrol boat">Patrol boat</a> (or destroyer)</td>
         <td style="text-align:center;">2</td>
     </tr>
 </table>
