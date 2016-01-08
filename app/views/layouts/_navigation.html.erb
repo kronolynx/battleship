@@ -10,13 +10,14 @@
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <% if logged_in? %>
         <ul class="nav navbar-nav col-md-6">
-          <li><%= link_to "Link1", "/path1"  %></li>
+          
           <li><%= link_to "Link2", "/path2"  %></li>
           <li><%= link_to "Link3", "/path3"  %></li>
         </ul>
         <ul class="nav navbar-right col-md-4">
           <li class="col-md-8 user-name text-right">
-            <i class="fa fa-user"></i>
+            <!--<i class="fa fa-user"></i>-->
+            <li class="round-image-40"><%= image_tag(current_user.avatar.url(:thumb)) %></li>
             <%= current_user.username %>
           </li>
           <li class="col-md-4 zero-padding-left">
