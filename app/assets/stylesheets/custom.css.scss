@@ -6,14 +6,12 @@
   padding-left: 0;
 }
 
-.user-name {
-  padding-top: 15px;
-}
+
 
 .nav.navbar-right li {
   .btn {
     color: #fff !important;
-    margin-top: 5%;
+    margin-top: 9%;
   }
   .btn-danger:hover {
     background-color: darken(#d9534f, 20%) !important;
@@ -31,5 +29,10 @@
     overflow: hidden;
     text-align: center;
     img { width: 100% }
-    float:left;
+    padding-right:1px;
+}
+
+.listing {
+    list-style: none;
+    padding-left:0;
 }
