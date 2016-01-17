@@ -18,3 +18,6 @@
 
 # Ignore c9 files
 .c9/
+
+#ignore public
+/public/system
