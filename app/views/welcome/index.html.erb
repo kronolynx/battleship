@@ -7,21 +7,25 @@
           <i class="fa fa-search"></i>
         </div>
         <!-- User list -->
-        <% @users.each do |user| %>
-          <ul class="list">
+        <ul class="list">
+          <% @users.each do |user| %>
             <% if user != current_user %>
               <li class="clearfix">
                 <%= image_tag(user.avatar.url(:thumb), :class => "round-image-40") %>
                 <div class="about">
                   <div class="name"><%= user.username %></div>
                   <div class="status">
-                    <i class="fa fa-circle online"></i> online
+                    <i class="fa fa-circle <%= user.online %>"></i> <%= user.online %>
                   </div>
                 </div>
+                <% if user.online == 'online' %>
+                  <a><%= link_to "Battle", "battle", method: "post", class: "btn btn-success btn-xs start-battle",
+                           "data-sid" => current_user.id, "data-rip" => user.id %></a>
+                <% end %>
               </li>
             <% end %>
-          </ul>
-        <% end %>
+          <% end %>
+        </ul>
         <!-- end user list -->
       </div>
     </div>

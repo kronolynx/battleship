@@ -17,7 +17,7 @@
                 Losses: <%= user.losses %>
               </li>
               <li>
-                <% if user.online == 2 %>
+                <% if user.online == 'online' %>
                   <a><%= link_to "Battle", "battle", method: "post", class: "btn btn-success btn-md start-battle",
                            "data-sid" => current_user.id, "data-rip" => user.id %></a>
                 <% end %>

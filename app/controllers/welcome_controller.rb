@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    @users = User.all
+    @users = User.all.order(online: :desc)
   end
 end
