@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   
   helper_method :logged_in?
 
-  
 
   def logged_in?
     # with the !! we convert anything in to a boolean
