@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get '/users', to: "users#index"
   get '/user/:id', to: 'users#show', as: 'user'
+  post 'shipyard', to: 'battles#shipyard'
+  post 'battle', to: 'battles#battle'
 end

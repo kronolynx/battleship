@@ -18,7 +18,7 @@
               </li>
               <li>
                 <% if user.online == 2 %>
-                  <a><%= link_to "Battle", "#", class: "btn btn-success btn-md start-battle",
+                  <a><%= link_to "Battle", "battle", method: "post", class: "btn btn-success btn-md start-battle",
                            "data-sid" => current_user.id, "data-rip" => user.id %></a>
                 <% end %>
               </li>

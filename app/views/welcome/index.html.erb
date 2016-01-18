@@ -1,1 +1,31 @@
-<h1>Welcome</h1>
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="people-list" id="people-list">
+        <div class="search">
+          <input type="text" placeholder="search" />
+          <i class="fa fa-search"></i>
+        </div>
+        <!-- User list -->
+        <% @users.each do |user| %>
+          <ul class="list">
+            <% if user != current_user %>
+              <li class="clearfix">
+                <%= image_tag(user.avatar.url(:thumb), :class => "round-image-40") %>
+                <div class="about">
+                  <div class="name"><%= user.username %></div>
+                  <div class="status">
+                    <i class="fa fa-circle online"></i> online
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <!-- end user list -->
+      </div>
+    </div>
+  </div>
+<% else %>
+  <h1> Welcome </h1>
+<% end %>
