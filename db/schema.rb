@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108174257) do
+ActiveRecord::Schema.define(version: 20160117211148) do
+
+  create_table "battles", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "enemy_id"
+    t.string   "player_board"
+    t.string   "enemy_board"
+    t.integer  "active_player"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "battles", ["enemy_id"], name: "index_battles_on_enemy_id"
+  add_index "battles", ["player_id"], name: "index_battles_on_player_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
