@@ -49,6 +49,14 @@ $gray: #92959E;
   width:260px;
   float: left;
   
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+  
+  background: #444753;
+  border-radius: 5px;
+  color: white;
+  
   .search {
     padding: 20px;
   }
@@ -71,9 +79,6 @@ $gray: #92959E;
   ul {
     padding: 20px;
     height: 770px;
- 
-    
-    
     
     li {
       padding-bottom: 20px;
@@ -108,6 +113,10 @@ $gray: #92959E;
   border-bottom-right-radius: 5px;
   
   color: #434651;
+  
+  li{
+    list-style: none;
+  }
   
   .chat-header {
     padding: 20px;
