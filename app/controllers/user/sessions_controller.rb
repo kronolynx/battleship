@@ -1,4 +1,6 @@
 class User::SessionsController < Devise::SessionsController
+  after_filter :log_failed_login, :only => :new
+  
   def create
     super
     current_user.online = "online"
@@ -13,4 +15,13 @@ class User::SessionsController < Devise::SessionsController
     current_user.save
     super
   end
+  
+  private
+    def log_failed_login
+      MyLog.info("#{request.filtered_parameters["user"]["email"]} failed to login from #{request.remote_ip}") if failed_login?
+    end
+    
+    def failed_login?
+      (options = env["warden.options"]) && options[:action] == "unauthenticated"
+    end
 end
