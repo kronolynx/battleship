@@ -1,35 +1,18 @@
 class BattlesController < ApplicationController
-  def shipyard
-    
-  end
-  
-  def battle
-    
-  end
-  
   def create
     if Battle.between(params[:player_id],params[:enemy_id]).present?
-      @conversation = Battle.between(params[:player_id],params[:enemy_id]).first
+      @battle = Battle.between(params[:player_id],params[:enemy_id]).first
     else
-      @conversation = Battle.create!(conversation_params)
+      @battle = Battle.new
+      @battle.player_id = params[:player_id]
+      @battle.enemy_id = params[:enemy_id]
+      @battle.save!
     end
-
-    render json: { battle_id: @conversation.id }
+    @enemy = (current_user == @battle.player ? @battle.enemy : @battle.player)
   end
-
-  def show
-    @conversation = Battle.find(params[:id])
-    @reciever = interlocutor(@conversation)
-    @messages = @conversation.messages
-    @message = Battle.new
+  
+  def attack
+    
   end
-
-  private
-  def conversation_params
-    params.permit(:player_id, :enemy_id)
-  end
-
-  def interlocutor(conversation)
-    current_user == conversation.enemy ? conversation.player : conversation.enemy
-  end
+  
 end
