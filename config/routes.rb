@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   get '/users', to: "users#index"
   get '/user/:id', to: 'users#show', as: 'user'
   post 'battlefield', to: 'battles#create'
-  post 'attack', to: 'battles#attack'
+  get 'battle/:id', to: 'battles#show', as: 'battle'
   
 end

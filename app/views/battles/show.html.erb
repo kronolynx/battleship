@@ -8,8 +8,8 @@
         <i class="fa fa-star"></i>
       </div> <!-- end chat-header -->
       
-      <div class="chat-history chat">
-        <% #= render @messages %>
+      <div class="chat-history" id="chatbox_<%= @battle.id %>">
+        <%= render @battle.messages %>
         <!-- sample messages
         <ul>
           <li class="clearfix">
@@ -45,7 +45,8 @@
         
         <button>Send</button>
         -->
-        <%= form_for Message.new, remote: true do |f| %>
+        <%= form_for Message.new , method: :post do |f| %>
+          <%= f.hidden_field :battle_id, :value => @battle.id %>
           <%= f.text_field :body %>
           <%= f.submit "Send" %>
         <% end %>
