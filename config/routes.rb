@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   resources :messages
 
-  get '/users', to: "users#index"
-  get '/user/:id', to: 'users#show', as: 'user'
+  get 'users', to: "users#index"
+  get 'user/:id', to: 'users#show', as: 'user'
   post 'battlefield', to: 'battles#create'
   get 'battle/:id', to: 'battles#show', as: 'battle'
   

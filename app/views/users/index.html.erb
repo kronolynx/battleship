@@ -18,8 +18,8 @@
               </li>
               <li>
                 <% if user.online == 'online' %>
-                  <a><%= link_to "Battle", "shipyard", method: "post", class: "btn btn-success btn-md start-chat",
-                           "data-sid" => current_user.id, "data-rip" => user.id %></a>
+                  <a><%= link_to "Battle", battlefield_path(:player_id => current_user.id, :enemy_id => user.id), method: :post, 
+                        class: "btn btn-success btn-md start-chat"%></a>
                 <% end %>
               </li>
             </div>

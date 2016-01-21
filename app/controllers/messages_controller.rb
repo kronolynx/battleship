@@ -5,8 +5,6 @@ class MessagesController < ApplicationController
     @message = @battle.messages.build(message_params)
     @message.user_id = current_user.id
     @message.save!
-
-    @path = battlefield_path(@battle)
   end
   def message_params
     params.require(:message).permit(:body, :battle_id)

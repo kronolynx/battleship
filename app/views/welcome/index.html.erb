@@ -20,7 +20,7 @@
                 </div>
                 <% if user.online == 'online' %>
                   <a><%= link_to "Battle", battlefield_path(:player_id => current_user.id, :enemy_id => user.id), method: :post, 
-                  class: "btn btn-success btn-xs start-battle"%></a>
+                        class: "btn btn-success btn-xs start-battle"%></a>
                   
                 <% end %>
               </li>
