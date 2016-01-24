@@ -1,4 +1,4 @@
-<% if message.user == current_user %>
+<% if message.user_id == message.battle.player_id %>
 <li>
   <div class="message-data">
     <span class="message-data-name"><i class="fa fa-circle online"></i> <%= current_user.username %></span>
