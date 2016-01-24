@@ -22,8 +22,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # chat
-#gem 'private_pub'
-#gem 'thin'
+gem 'private_pub'
+gem 'thin'
 # upload avatar
 gem "paperclip", "~> 4.3"
 

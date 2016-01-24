@@ -1,5 +1,7 @@
-$("#message_body").val('');
-var chatbox = $("#chatbox_<%= @message.battle.id %>");
-chatbox.append("<%= j render( partial: @message ) %>");
-var chat = $(".chat-history");
-chat.scrollTop(chat[0].scrollHeight);
+<% publish_to @path do %>
+  $("#message_body").val('');
+  var chatbox = $("#chatbox_<%= @message.battle.id %>");
+  chatbox.append("<%= j render( partial: @message ) %>");
+  var chat = $(".chat-history");
+  chat.scrollTop(chat[0].scrollHeight);
+<% end %>
