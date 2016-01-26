@@ -1,0 +1,21 @@
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="people-list" id="people-list">
+        <div class="search">
+          <input type="text" placeholder="search" />
+          <i class="fa fa-search"></i>
+        </div>
+        <!-- User list -->
+        <%= render 'home/users_list' %>
+        <!-- end user list -->
+      </div>
+    </div>
+    <div>
+      <button id="button_test">User id <%= current_user.id %></button>
+    </div>
+  </div>
+    <%= subscribe_to "/user_#{current_user.id}" %>
+<% else %>
+  <h1> Welcome </h1>
+<% end %>

@@ -6,7 +6,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="/">Battleship</a>
+    <%= link_to "Battleship", root_path, class: "navbar-brand" %>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <% if logged_in? %>
         <ul class="nav navbar-nav col-md-6">
@@ -40,7 +40,7 @@
             <li class="col-md-4">
               <%= link_to("Sign up", new_user_registration_path , class: "btn btn-xs btn-primary") %>
             </li>
-            <li class="col-md-4 zero-padding-left">
+            <li class="col-md-4">
               <%= link_to("Sign in", user_session_path, class: "btn btn-xs btn-primary") %>
             </li>
           </ul>

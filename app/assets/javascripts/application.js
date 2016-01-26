@@ -10,9 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require private_pub
 //= require jquery
 //= require jquery_ujs
+//= require private_pub
+//= require battle
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .

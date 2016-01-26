@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
     @message.user_id = current_user.id
     @message.save!
 
-    #PrivatePub.publish_to battle_path(@battle, "aler('test'")
+    #PrivatePub.publish_to(battle_path(@battle), "alert('hi from the battle')")
+    #PrivatePub.publish_to(users_path, "alert('hi from the controller')")
     @path = battle_path(@battle)
   end
   def message_params
