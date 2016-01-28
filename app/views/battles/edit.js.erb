@@ -1,0 +1,17 @@
+
+/* TODO
+when the user attacks the database must be updated
+and the other player board must change in real time, without the need to
+access the database. the database will be used only to keep track of the game
+in case the player leaves the game can be loaded later on.
+ */
+
+// here will be the player board update
+$('#finalbattle').html("Player <%= current_user.username %>, enemy <%= enemy(@battle).username %>");
+
+console.log("hey dude keep it up!!");
+
+// here will be the enemy board update
+<% publish_to "/user_#{enemy_id @battle}" do %>
+ // do the attacks here ,
+<% end %>

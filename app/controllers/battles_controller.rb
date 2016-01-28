@@ -13,6 +13,7 @@ class BattlesController < ApplicationController
     end
     # when a player starts a battle redirects the enemy to the battle page
     PrivatePub.publish_to("/user_#{enemy_id @battle}", "window.location.href = \"#{battle_path(@battle)}\";")
+    PrivatePub.publish_to("/users", "console.log('this should be in a new file and render a partial user list');")
     # redirect player to the battle
     redirect_to battle_path(@battle)
 
@@ -21,5 +22,18 @@ class BattlesController < ApplicationController
   def show
     @battle = Battle.find(params[:id])
     @enemy = enemy(@battle)
+  end
+
+  def edit
+    @battle = Battle.find(params[:id])
+    #PrivatePub.publish_to("/user_#{enemy_id @battle}", "alert('attack');" )
+    respond_to do |format|
+      format.html { redirect_to battle_path(@battle) }
+      format.js
+    end
+  end
+
+  def game
+
   end
 end

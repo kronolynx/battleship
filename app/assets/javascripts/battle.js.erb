@@ -1,0 +1,7 @@
+$(function(){
+  $(".te").click(function(e){
+    e.preventDefault();
+    console.log("about to attack");
+    $.post("/battle/1/attack")
+  });
+});
