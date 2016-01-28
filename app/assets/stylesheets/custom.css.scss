@@ -43,7 +43,7 @@ $gray: #92959E;
 }
 
 
-// chat
+// chat list
 
 .people-list {
   width:260px;
@@ -105,9 +105,11 @@ $gray: #92959E;
   
 }
 
+/* chat */
+
 .chat {
-  width: 490px;
-  float:left;
+  width: 400px;
+  margin-top: 77px;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -143,14 +145,14 @@ $gray: #92959E;
     
     .fa-star {
       float: right;
-      color: #D8DADF;
+      color: rebeccapurple;
       font-size: 20px;
       margin-top: 12px;
     }
   }
   
   .chat-history {
-    padding: 30px 30px 20px;
+    padding: 30px 20px 20px 0px;
     border-bottom: 2px solid white;
     overflow-y: scroll;
     height: 575px;
@@ -205,17 +207,15 @@ $gray: #92959E;
   }
   
   .chat-message {
-    padding: 30px;
+    padding: 30px 10px;
     
     textarea {
       width: 100%;
-      border: none;
       padding: 10px 20px;
       font: 14px/22px "Lato", Arial, sans-serif;
       margin-bottom: 10px;
       border-radius: 5px;
       resize: none;
-      
     }
     
     .fa-file-o, .fa-file-image-o {
@@ -224,8 +224,8 @@ $gray: #92959E;
       cursor: pointer;
       
     }
-    
-    button {
+
+    input[type=submit] {
       float: right;
       color: $blue;
       font-size: 16px;
@@ -269,6 +269,10 @@ $gray: #92959E;
 
 .float-right {
   float: right;
+}
+
+.float-left {
+  float: left;
 }
 
 .clearfix:after {
