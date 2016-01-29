@@ -5,7 +5,7 @@ $(document).ready(function () {
     board += "<div class='seaBox' id='pos" + i + "'></div>";
   }
   $(".board").append(board);
-  $("#rightBoard").children().append("<span class='hole'></span>");
+  $("#enemy-board").children().append("<span class='hole'></span>");
 
 
   $('.ship').draggable({
@@ -45,7 +45,7 @@ $(document).ready(function () {
 
   });
 
-  enemyBoard.highlight("#rightBoard  .seaBox");
+  enemyBoard.highlight("#enemy-board  .seaBox");
 });
 
 // class
@@ -61,6 +61,29 @@ var enemyBoard = {
     $(seaBox).on("click", function () {
       //alert($(this).attr('class'));
       $(this).children().addClass("miss");
+      //console.log();
+
+      var battleField = $('#battle-field');
+      var battleId = battleField.data('battleId');
+      var attack = $(this).attr("id").substring(3);
+      //var playerId = battleField.data('playerId');
+      //var enemyId = battleField.data('enemyId');
+
+      //console.log(battleId + " " + enemyId);
+
+      $.ajax({
+        url: "/battle/"+ battleId + "/edit?attack=" + attack,
+        type: "post",
+        success: function(){
+          console.log('successful attack');
+        },
+        error:function(){
+          alert('Error');
+        }
+      });
+
+
+
       /*if ((this).hasClass('ship')) {
        $(this).addClass("hit");
        } else {

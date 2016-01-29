@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-// require jquery-ui
+//= require jquery-ui
 //= require private_pub
 //= require twitter/bootstrap
 //= require turbolinks

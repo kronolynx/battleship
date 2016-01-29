@@ -1,16 +1,16 @@
 <div class="col-md-6">
   <h1 class="playing">Your turn</h1>
 
-  <!--
-  <div>
-    < % #= button_to "attack", attack_path(@battle), class: "test", :remote => true %>
-  </div> -->
 
-    <div id="battle-fields ">
-      <div id="leftBoard" class="board">
+  <div>
+    <% # = button_to "attack", attack_path(@battle), class: "test", :remote => true %>
+  </div>
+
+    <div id="battle-field" data-player-id="player_<%= current_user.id %>" data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
+      <div id="player-board" class="board" >
 
       </div>
-      <div id="rightBoard" class="board">
+      <div id="enemy-board" class="board" >
 
       </div>
     </div>
