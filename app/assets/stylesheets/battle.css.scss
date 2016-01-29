@@ -1,4 +1,5 @@
 .board {
+  float:left;
   font-weight: bold;
   z-index: -50;
   display: inline-block;
@@ -26,6 +27,26 @@
   border: .7px solid white;
 }
 
+#shipSelection {
+  margin-top: 7px;
+  width: 272px;
+  float: left;
+}
+
+#shipYard {
+  height: 353px;
+  padding: 35px;
+  border: solid 1px gray;
+  border-radius: 6px;
+  background-image: asset-data-url('water.jpg');
+  background-size: cover;
+
+  background-position: 0px 0px;
+  background-repeat: repeat-x;
+
+  animation: animatedBackground 50s linear infinite;
+  /*background-color: rgba(198, 213, 226, .5); */
+}
 
 /** ships **/
 
@@ -130,19 +151,7 @@
 
 }
 
-#shipSelection {
-  margin-top: 7px;
-  width: 272px;
-  float: right;
-}
 
-#shipYard {
-  height: 353px;
-  padding: 35px;
-  border: solid 1px gray;
-  border-radius: 6px;
-  background-color: rgba(198, 213, 226, .5);
-}
 
 
 

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+  $(function(){
+    <% if @player_board.nil? %>
+    var placementBoard =
+        '<div id="shipSelection">' +
+          '<div id="shipYard">' +
+            '<div class="ship" id="aircraft"></div>' +
+            '<div class="spacer"> </div>' +
+            '<div class="ship" id="destroyer"></div>' +
+            '<div class="spacer"> </div>' +
+            '<div class="ship" id="cruiser"></div>' +
+            '<div class="spacer"> </div>' +
+            '<div class="ship" id="cruiser2"></div>' +
+            '<div class="spacer"> </div>' +
+            '<div class="ship" id="destroyer2"></div>' +
+          '</div>' +
+          '<form>' +
+            '<a href="#" class="btn btn-primary btn-lg btn-block alt">Ready</a>' +
+          '</form>' +
+        '</div>';
+
+    $('#enemy-board').hide();
+    $('#battle-field').append(placementBoard);
+    $('#player-board').addClass('placementBoard');
+
+
+    $('.ship').draggable({
+      containment: '#placementBoard',
+      snap: ".seaBox",
+      grid: [40, 40],
+      //stack: ".ship"
+      revert: "invalid"
+    });
+
+
+    $('.placementBoard .seaBox').droppable({
+
+      drop: function (event, ui) {
+        //alert(ui.draggable.attr("id") + " at pos " + $(this).attr("id"));
+        //$(this).droppable('disable').addClass("test");
+        //$(this).droppable('disable');
+        //$(this).addClass("highlight");
+      },
+      out: function () {
+        //$(this).droppable('enable').removeClass("test");
+        //$(this).droppable('enable');
+        //$(this).removeClass("test");
+      }
+    });
+    $(".ship").dblclick(function () {
+
+      var ship_id = $(this).attr("id");
+      var height = $(this).css("height");
+      var width = $(this).css("width");
+
+      ship_id = ship_id.charAt(ship_id.length - 1 ) == 'V' ? ship_id.slice(0, -1) : ship_id + "V";
+
+      $(this).css("height", width);
+      $(this).css("width", height);
+      $(this).attr("id", ship_id);
+
+    });
+    <% else %>
+    // here will render the board
+    <% end %>
+  })
+</script>

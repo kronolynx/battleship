@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-8">
   <h1 class="playing">Your turn</h1>
 
 
@@ -6,10 +6,13 @@
     <% # = button_to "attack", attack_path(@battle), class: "test", :remote => true %>
   </div>
 
-    <div id="battle-field" data-player-id="player_<%= current_user.id %>" data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
-      <div id="player-board" class="board" >
+    <div id="battle-field" data-player-id="player_<%= current_user.id %>"
+         data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
 
+      <div id="player-board" class="board" data-board="<%= @player_board %>" >
+        <%= render('battles/player_board') %>
       </div>
+
       <div id="enemy-board" class="board" >
 
       </div>
@@ -22,8 +25,8 @@
 
 </div>
 
-
-<div class="chat col-md-3">
+<div class="col-md-3">
+  <div class="chat">
 
     <div class="chat-header clearfix">
       <%= image_tag(@enemy.avatar.url(:thumb), :class => "round-image-40") %>
@@ -41,21 +44,15 @@
     </div> <!-- end chat-history -->
 
     <div class="chat-message clearfix">
-      <!-- to delete    <div class="chat-message clearfix">
-      <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
-
-      <button>Send</button>
-      -->
       <%= form_for Message.new , remote: true do |f| %>
         <%= f.hidden_field :battle_id, :value => @battle.id %>
         <%= f.text_area :body %>
         <%= f.submit "Send" %>
       <% end %>
-
     </div> <!-- end chat-message -->
 
-</div> <!-- end chat -->
-
+  </div> <!-- end chat -->
+</div>
 
 <%= subscribe_to battle_path(@battle) %>
 <%= subscribe_to "/user_#{current_user.id}" %>

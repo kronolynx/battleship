@@ -26,19 +26,14 @@ class BattlesController < ApplicationController
 
   def edit
     @battle = Battle.find(params[:id])
+    @player_board = @battle.player_id == current_user.id ? @battle.player_board : @battle.enemy_board
+
     PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board #pos#{params[:attack]}').addClass('target');" )
-    #PrivatePub.publish_to("/user_#{enemy_id @battle}", "document.getElementById('#player-board').addClass('target');" )
+
     respond_to do |format|
       format.html { render :nothing => true }
       #format.html { redirect_to battle_path(@battle) }
       format.js { render :nothing => true }
-    end
-  end
-
-  def attack
-    Rails.logger.debug params.inspect
-    respond_to do |format|
-      format.html { render :nothing => true }
     end
   end
 end

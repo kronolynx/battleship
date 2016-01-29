@@ -8,44 +8,9 @@ $(document).ready(function () {
   $("#enemy-board").children().append("<span class='hole'></span>");
 
 
-  $('.ship').draggable({
-    containment: '#placementBoard',
-    snap: ".seaBox",
-    grid: [40, 40],
-    //stack: ".ship"
-    revert: "invalid"
-  });
 
 
-  $('#placementBoard .seaBox').droppable({
-
-    drop: function (event, ui) {
-      //alert(ui.draggable.attr("id") + " at pos " + $(this).attr("id"));
-      //$(this).droppable('disable').addClass("test");
-      //$(this).droppable('disable');
-      //$(this).addClass("highlight");
-    },
-    out: function () {
-      //$(this).droppable('enable').removeClass("test");
-      //$(this).droppable('enable');
-      //$(this).removeClass("test");
-    }
-  });
-  $(".ship").dblclick(function () {
-
-    var ship_id = $(this).attr("id");
-    var height = $(this).css("height");
-    var width = $(this).css("width");
-
-    ship_id = ship_id.charAt(ship_id.length - 1 ) == 'V' ? ship_id.slice(0, -1) : ship_id + "V";
-
-    $(this).css("height", width);
-    $(this).css("width", height);
-    $(this).attr("id", ship_id);
-
-  });
-
-  enemyBoard.highlight("#enemy-board  .seaBox");
+  enemyBoard.highlight("#enemy-board .seaBox");
 });
 
 // class
