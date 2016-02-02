@@ -2,7 +2,7 @@
 $(document).ready(function () {
   var board = "";
   for (var i = 0; i < 100; i++) {
-    board += "<div class='seaBox' id='pos" + i + "'></div>";
+    board += "<div class='seaBox' id='" + i + "'></div>";
   }
   $(".board").append(board);
   $("#enemy-board").children().append("<span class='hole'></span>");
@@ -30,6 +30,7 @@ var enemyBoard = {
 
       var battleField = $('#battle-field');
       var battleId = battleField.data('battleId');
+      // TODO check if is working if not just remove substring because seabox all id was posN now ID is just N
       var attack = $(this).attr("id").substring(3);
       //var playerId = battleField.data('playerId');
       //var enemyId = battleField.data('enemyId');
