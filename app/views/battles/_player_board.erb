@@ -30,14 +30,7 @@
       containment: '.placementBoard',
       snap: ".seaBox",
       grid: [40, 40],
-      //stack: ".ship"
-      revert: "invalid",
-
-      drag: function (even, ui) {
-
-      }
-
-
+      revert: "invalid"
     });
 
 
@@ -45,25 +38,9 @@
       tolerance: "intersect",
       accept: ".ship",
       drop: function (event, ui) {
-        //ui.draggable.detach().appendTo($(this));
-        //console.log(ui.draggable.attr("id") + " at pos " + $(this).attr("id"));
-        //console.log(ui.position);
-        //console.log("drop " + $(this).attr("id").substring(3));
-        //console.log("ship " + ui.draggable.attr("id"));
-        setShip(ui.draggable.attr("id"), $(this).attr("id").substring(3));
-        //$(this).droppable('disable').addClass("test");
-        //$(this).droppable('disable');
-        //$(this).addClass("highlight");
-
-
-      },
-      out: function (event, ui) {
-        console.log("out " + $(this).attr("id").substring(3));
-        //console.log("ship " + ui.draggable.attr("id"));
-        unsetShip(ui.draggable.attr("id"), $(this).attr("id").substring(3));
-        //$(this).droppable('enable').removeClass("test");
-        //$(this).droppable('enable');
-        //$(this).removeClass("test");
+        appendShip(ui.draggable, $(this).attr("id").substring(3));
+        console.log($(ui.draggable).parent().attr('id'));
+        console.log($(ui.draggable).parent().attr('id'));
       }
     });
 
@@ -81,50 +58,17 @@
 
     });
 
-    function setShip(shipType, pos) {
-      if (shipType == "aircraft") {
-        $("#pos" + (pos - 2)).addClass("s").droppable("option", "accept", "#" + shipType);
-        $("#pos" + (pos - 1)).droppable("option", "accept", "#" + shipType);
-        $("#pos" + (pos)).droppable("option", "accept", "#" + shipType);
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", "#" + shipType);
-        $("#pos" + (parseInt(pos) + 2)).droppable("option", "accept", "#" + shipType);
+    function appendShip(ship, pos) {
+      if (ship.attr("id") == "aircraft") {
+        ship.detach().appendTo($("#pos" + (pos - 2)));
       }
-      else if (shipType.substring(0, shipType.length - 1) == "cruiser") {
-        $("#pos" + (pos - 1)).addClass("s").droppable("option", "accept", "#" + shipType);
-        $("#pos" + (pos)).droppable("option", "accept", "#" + shipType);
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", "#" + shipType);
+      else if (ship.attr("id").substring(0, ship.attr("id").length - 1) == "cruiser") {
+        ship.detach().appendTo($("#pos" + (pos - 1)));
       } else {
-        $("#pos" + (pos)).addClass("s").droppable("option", "accept", "#" + shipType);
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", "#" + shipType);
+        ship.detach().appendTo($("#pos" + pos));
       }
-
     }
 
-
-    function unsetShip(shipType, pos) {
-      if (shipType == "aircraft") {
-        $("#pos" + (pos - 2)).removeClass("s").droppable("option", "accept", ".ship");
-        $("#pos" + (pos - 1)).droppable("option", "accept", ".ship");
-        $("#pos" + (pos)).droppable("option", "accept", ".ship");
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", ".ship");
-        $("#pos" + (parseInt(pos) + 2)).droppable("option", "accept", ".ship");
-      }
-      else if (shipType.substring(0, shipType.length - 1) == "cruiser") {
-        $("#pos" + (pos - 1)).removeClass("s").droppable("option", "accept", ".ship");
-        $("#pos" + (pos)).droppable("option", "accept", ".ship");
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", ".ship");
-      } else {
-        $("#pos" + (pos)).removeClass("s").droppable("option", "accept", ".ship");
-        $("#pos" + (parseInt(pos) + 1)).droppable("option", "accept", ".ship");
-      }
-
-      //$("#pos" + (pos - 2)).droppable("enable").removeClass("s");
-      //$("#pos" + (pos - 1)).droppable("enable");
-      //$("#pos" + pos).droppable("enable");
-      //$("#pos" + (parseInt(pos) + 1)).droppable("enable");
-      //$("#pos" + (parseInt(pos) + 2)).droppable("enable");
-
-    }
 
     <% else %>
     // here will render the board
