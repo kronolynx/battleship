@@ -30,18 +30,7 @@
       containment: '.placementBoard',
       snap: ".seaBox",
       grid: [40, 40],
-      //revert: "invalid"
-      revert: function () {
-        //console.log("parent id " + this.parent().attr('id'));
-        //console.log("this id " + this.attr('id'));
-        //console.log("position " + getShipPosition(this));
-        //console.log(this.parent().hasClass('seaBox') );
-        //console.log("check coll " + checkCollision(this.attr('id'), getShipPosition(this)));
-        if (this.parent().hasClass('seaBox') && !checkCollision(this.attr('id'), getShipPosition(this))) {
-          return false;
-        }
-        return "invalid";
-      }
+      revert: "invalid"
     });
 
 
@@ -49,13 +38,19 @@
       tolerance: "intersect",
       accept: ".ship",
       drop: function (event, ui) {
-        // TODO append only if there's no collision
-        appendShip(ui.draggable, $(this).attr("id"));
+        if(!checkCollision(ui.draggable.attr("id"), calculateShipPosition(ui.draggable,$(this).attr("id"))))
+          appendShip(ui.draggable, $(this).attr("id"));
+        else {
+          var position = $("#" + getShipAppendedPosition(ui.draggable)).position();
+          ui.draggable.animate({
+            top: position.top,
+            left: position.left
+          }, 500);
+        }
       }
     });
 
     $(".ship").dblclick(function () {
-
       var ship_id = $(this).attr("id");
       var height = $(this).css("height");
       var width = $(this).css("width");
@@ -68,17 +63,25 @@
 
     });
 
+    /**
+     * Append ship to board
+     */
     function appendShip(ship, pos) {
+        ship.detach().appendTo($("#" + calculateShipPosition(ship, pos)));
+    }
+
+    function calculateShipPosition(ship, pos) {
       var shipId = ship.attr("id");
-      console.log(shipId + " " + pos);
+      var headPos ="";
       if (shipId.indexOf("aircraft") > -1) {
-        ship.detach().appendTo($("#" + (pos - (2 * getStep(shipId)))));
+        headPos = pos - (2 * getStep(shipId));
       }
       else if (shipId.indexOf("cruiser") > -1) {
-        ship.detach().appendTo($("#" + (pos - (1 * getStep(shipId)))));
+        headPos = pos - (1 * getStep(shipId));
       } else {
-        ship.detach().appendTo($("#" + pos));
+        headPos = pos;
       }
+      return headPos;
     }
 
     /**
@@ -92,8 +95,8 @@
       $(".ship").each(function () {
         var ship = $(this);
         var otherId = ship.attr("id");
-        var otherPos = getShipPosition(ship);
-        if (shipId != otherId) {
+        var otherPos = getShipAppendedPosition(ship);
+        if (shipId != otherId && shipPos != "shipYard") {
           if (comparePosition(shipPos, otherPos, getShipSize(shipId), getShipSize(otherId), getStep(shipId), getStep(otherId))) {
             collision = true;
             return false;
@@ -117,13 +120,9 @@
       if (pos2 != "shipYard") {
         var tailShip1 = getShipTail(posDragged, size1, step1);
         var tailShip2 = getShipTail(pos2, size2, step2);
-        console.log("ship1 " + posDragged + " " + tailShip1);
-        console.log("ship1=2 " + pos2 + " " + tailShip2);
         for (var i = parseInt(posDragged); i <= tailShip1; i += step1) {
           for (var k = parseInt(pos2); k <= tailShip2; k += step2) {
-            console.log(i + " <> " + k);
             if (k == i) {
-              console.log("colision at " + k);
               return true;
             }
           }
@@ -137,7 +136,6 @@
     }
 
     function getShipTail(pos, size, step) {
-      //console.log("getTail " + pos + " " + size + " " + step);
       return (parseInt(pos) + ((parseInt(size) - 1) * step));
     }
 
@@ -146,7 +144,7 @@
      * @param ship object
      * @returns {string}
      */
-    function getShipPosition(ship) {
+    function getShipAppendedPosition(ship) {
       return ship.parent().attr('id');
     }
 
