@@ -1,23 +1,12 @@
 <script type="text/javascript">
+
   $(function () {
     <% if @player_board.nil? %>
-    var placementBoard =
-        '<div id="shipSelection">' +
-        '<div id="shipYard">' +
-        '<div class="ship" id="aircraft"></div>' +
-        '<div class="spacer"> </div>' +
-        '<div class="ship" id="destroyer1"></div>' +
-        '<div class="spacer"> </div>' +
-        '<div class="ship" id="cruiser1"></div>' +
-        '<div class="spacer"> </div>' +
-        '<div class="ship" id="cruiser2"></div>' +
-        '<div class="spacer"> </div>' +
-        '<div class="ship" id="destroyer2"></div>' +
-        '</div>' +
-        '<form>' +
-        '<a href="#" class="btn btn-primary btn-lg btn-block alt">Ready</a>' +
-        '</form>' +
-        '</div>';
+
+    console.log(<%= @player_board %>)
+
+
+    var placementBoard = placementBoard();
 
     $('#enemy-board').hide();
     $('#battle-field').append(placementBoard);
@@ -38,8 +27,8 @@
       tolerance: "intersect",
       accept: ".ship",
       drop: function (event, ui) {
-        if(!checkCollision(ui.draggable.attr("id"), calculateShipPosition(ui.draggable,$(this).attr("id"))))
-          appendShip(ui.draggable, $(this).attr("id"));
+        if(!checkCollision(getShipId(ui.draggable), calculateShipPosition(ui.draggable, getShipId($(this)))))
+          appendShip(ui.draggable, getShipId($(this)));
         else {
           var position = $("#" + getShipAppendedPosition(ui.draggable)).position();
           ui.draggable.animate({
@@ -51,7 +40,7 @@
     });
 
     $(".ship").dblclick(function () {
-      var ship_id = $(this).attr("id");
+      var ship_id = getShipId($(this));
       var height = $(this).css("height");
       var width = $(this).css("width");
 
@@ -94,7 +83,7 @@
       var collision = false;
       $(".ship").each(function () {
         var ship = $(this);
-        var otherId = ship.attr("id");
+        var otherId = getShipId(ship);
         var otherPos = getShipAppendedPosition(ship);
         if (shipId != otherId && shipPos != "shipYard") {
           if (comparePosition(shipPos, otherPos, getShipSize(shipId), getShipSize(otherId), getStep(shipId), getStep(otherId))) {
@@ -131,42 +120,97 @@
       return false;
     }
 
-    function getStep(shipId) {
-      return shipId.indexOf('V') > -1 ? 10 : 1;
-    }
 
-    function getShipTail(pos, size, step) {
-      return (parseInt(pos) + ((parseInt(size) - 1) * step));
-    }
 
-    /**
-     *
-     * @param ship object
-     * @returns {string}
-     */
-    function getShipAppendedPosition(ship) {
-      return ship.parent().attr('id');
-    }
 
-    /**
-     *
-     * @param shipId  id of the ship
-     * @returns {number}
-     */
-    function getShipSize(shipId) {
-      var size = 0;
-      if (shipId.indexOf("aircraft") > -1) {
-        size = 5;
-      } else if (shipId.indexOf("cruiser") > -1) {
-        size = 3;
-      } else {
-        size = 2;
-      }
-      return size;
+
+
+
+    $("#ready").click(function () {
+      setBoardPlacement();
+    });
+
+    function placementBoard() {
+      var placementBoard =
+          '<div id="shipSelection">' +
+          '<div id="shipYard">' +
+          '<div class="ship" id="aircraft"></div>' +
+          '<div class="spacer"> </div>' +
+          '<div class="ship" id="destroyer1"></div>' +
+          '<div class="spacer"> </div>' +
+          '<div class="ship" id="cruiser1"></div>' +
+          '<div class="spacer"> </div>' +
+          '<div class="ship" id="cruiser2"></div>' +
+          '<div class="spacer"> </div>' +
+          '<div class="ship" id="destroyer2"></div>' +
+          '</div>' +
+          '<form>' +
+          '<a href="#" id="ready" class="btn btn-primary btn-lg btn-block alt">Ready</a>' +
+          '</form>' +
+          '</div>';
+      return placementBoard;
     }
 
     <% else %>
     // here will render the board
+    $("#enemy-board").children().append("<span class='hole'></span>");
+    $("#enemy-board").show();
+
+    var playerBoard = $('#player-board');
+
+    var board = "<%= @player_board %>";
+    displayPlayerShips(board);
+    //enemyBoard.highlight("#enemy-board .seaBox");
+
+    // class
+    /*var enemyBoard = {
+      // add variables to save stuff
+      highlight: function (seaBox) {
+        $(seaBox).on("mouseenter", function () {
+          $(this).addClass("target");
+        });
+        $(seaBox).on("mouseleave", function () {
+          $(this).removeClass("target");
+        });
+        $(seaBox).on("click", function () {
+          //alert($(this).attr('class'));
+          $(this).children().addClass("miss");
+          //console.log();
+
+          var battleField = $('#battle-field');
+          var battleId = battleField.data('battleId');
+          // TODO check if is working if not just remove substring because seabox all id was posN now ID is just N
+          var attack = $(this).attr("id");
+          //var attack = $(this).attr("id").substring(3);
+          //var playerId = battleField.data('playerId');
+          //var enemyId = battleField.data('enemyId');
+
+          //console.log(battleId + " " + enemyId);
+
+          $.ajax({
+            url: "/battle/"+ battleId + "/edit?attack=" + attack,
+            type: "post",
+            success: function(){
+              console.log('successful attack');
+            },
+            error:function(){
+              alert('Error');
+            }
+          });
+
+
+
+          /!*if ((this).hasClass('ship')) {
+           $(this).addClass("hit");
+           } else {
+           $(this).addClass("miss");
+           alert("clicked");
+
+           }*!/
+        });
+      }
+    };*/
+
     <% end %>
   })
 </script>

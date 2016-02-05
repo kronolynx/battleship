@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require private_pub
+//= require functions
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .

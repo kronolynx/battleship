@@ -10,8 +10,9 @@
     <div id="battle-field" data-player-id="player_<%= current_user.id %>"
          data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
 
-      <div id="player-board" class="board" data-board="<%= @player_board %>" >
-        <%= render('battles/player_board') %>
+      <%= render('battles/player_board') %>
+      <div id="player-board" class="board" >
+
       </div>
 
       <div id="enemy-board" class="board" >

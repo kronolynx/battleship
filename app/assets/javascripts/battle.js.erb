@@ -1,62 +1,11 @@
 // when document ready draw the board
 $(document).ready(function () {
-  var board = "";
-  for (var i = 0; i < 100; i++) {
-    board += "<div class='seaBox' id='" + i + "'></div>";
-  }
+  var board = generateBoard();
   $(".board").append(board);
-  $("#enemy-board").children().append("<span class='hole'></span>");
 
-
-
-
-  enemyBoard.highlight("#enemy-board .seaBox");
 });
 
-// class
-var enemyBoard = {
-  // add variables to save stuff
-  highlight: function (seaBox) {
-    $(seaBox).on("mouseenter", function () {
-      $(this).addClass("target");
-    });
-    $(seaBox).on("mouseleave", function () {
-      $(this).removeClass("target");
-    });
-    $(seaBox).on("click", function () {
-      //alert($(this).attr('class'));
-      $(this).children().addClass("miss");
-      //console.log();
-
-      var battleField = $('#battle-field');
-      var battleId = battleField.data('battleId');
-      // TODO check if is working if not just remove substring because seabox all id was posN now ID is just N
-      var attack = $(this).attr("id").substring(3);
-      //var playerId = battleField.data('playerId');
-      //var enemyId = battleField.data('enemyId');
-
-      //console.log(battleId + " " + enemyId);
-
-      $.ajax({
-        url: "/battle/"+ battleId + "/edit?attack=" + attack,
-        type: "post",
-        success: function(){
-          console.log('successful attack');
-        },
-        error:function(){
-          alert('Error');
-        }
-      });
 
 
 
-      /*if ((this).hasClass('ship')) {
-       $(this).addClass("hit");
-       } else {
-       $(this).addClass("miss");
-       alert("clicked");
 
-       }*/
-    });
-  }
-};

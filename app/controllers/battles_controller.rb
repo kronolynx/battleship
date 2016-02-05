@@ -22,18 +22,35 @@ class BattlesController < ApplicationController
   def show
     @battle = Battle.find(params[:id])
     @enemy = enemy(@battle)
+    @player_board = player_board(@battle)
   end
+
 
   def edit
     @battle = Battle.find(params[:id])
-    @player_board = @battle.player_id == current_user.id ? @battle.player_board : @battle.enemy_board
+    @player_board = player_board(@battle)
 
-    PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board #pos#{params[:attack]}').addClass('target');" )
+    PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board ##{params[:attack]}').addClass('target');" )
 
     respond_to do |format|
       format.html { render :nothing => true }
       #format.html { redirect_to battle_path(@battle) }
       format.js { render :nothing => true }
+    end
+  end
+
+  def ready
+    @battle = Battle.find(params[:id])
+    # set the user board according , if is the user or the enemy
+    @battle.player_id == current_user.id ? @battle.player_board = params[:board] : @battle.enemy_board= params[:board]
+    @battle.save
+    @player_board = player_board(@battle)
+    # todo if the other enemy board is not null then do something else tell the other player that this player is waiting
+
+    respond_to do |format|
+      format.html { render :nothing => true }
+      #format.html { redirect_to battle_path(@battle) }
+      format.js { render 'battles/set_board' }
     end
   end
 end

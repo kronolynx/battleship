@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   post 'battlefield', to: 'battles#create'
   get 'battle/:id', to: 'battles#show', as: 'battle'
   post 'battle/:id/edit', to: 'battles#edit', as: 'attack'
+  post 'battle/:id/ready', to: 'battles#ready', as: 'ready'
 end
