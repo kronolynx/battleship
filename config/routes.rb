@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get 'battle/:id', to: 'battles#show', as: 'battle'
   post 'battle/:id/edit', to: 'battles#edit', as: 'attack'
   post 'battle/:id/ready', to: 'battles#ready', as: 'ready'
+  post 'battle/:id/finish', to: 'battles#destroy', as: 'finish'
 end

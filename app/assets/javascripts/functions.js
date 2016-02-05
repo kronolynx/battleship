@@ -57,17 +57,17 @@ function setBoardPlacement() {
         $.ajax({
             url: "/battle/"+ battleId + "/ready?board=" + boardString,
             type: "post",
-            success: function(){
-                console.log('successful attack');
+            success: function(e){
+
+                console.log('ready');
             },
-            error:function(){
-                alert('Error');
+            error:function(e){
+                console.log('Error on ready ' + e);
             }
         });
     }else {
-        alert("All ship must be placed");
+        alert("All ships must be placed");
     }
-    console.log(boardString);
 }
 
 /**

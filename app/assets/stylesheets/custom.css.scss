@@ -4,14 +4,31 @@ $orange: #E38968;
 $gray: #92959E;
 
 .controls {
-    padding-bottom:10px;
+  padding-bottom: 10px;
 }
 
 .zero-padding-left {
   padding-left: 0;
 }
 
+#info-div {
+  width: 400px;
+  margin: 7px;
 
+  #btnGiveUp {
+    float: right;
+  }
+  #messages {
+    width: 310px;
+    float: left;
+    height: 36px;
+    border-radius: 3%;
+    text-align: center;
+    padding-top: 5px;
+    font-size: large;
+    color: $gray;
+  }
+}
 
 .nav.navbar-right li {
   .btn {
@@ -24,43 +41,44 @@ $gray: #92959E;
 }
 
 .round-image-40 {
-    background-color: white;
-    border: 1px solid #d9d9d9;
-    border-radius: 25px;
-    -moz-border-radius: 25px;
-    -webkit-border-radius: 25px;
-    height: 40px;
-    width: 40px;
-    overflow: hidden;
-    text-align: center;
-    img { width: 100% }
-    padding-right:1px;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  text-align: center;
+  img {
+    width: 100%
+  }
+  padding-right: 1px;
 }
 
 .listing {
-    list-style: none;
-    padding-left:0;
+  list-style: none;
+  padding-left: 0;
 }
-
 
 // chat list
 
 .people-list {
-  width:260px;
+  width: 260px;
   float: left;
-  
+
   *, *:before, *:after {
     box-sizing: border-box;
   }
-  
+
   background: #444753;
   border-radius: 5px;
   color: white;
-  
+
   .search {
     padding: 20px;
   }
-  
+
   input {
     border-radius: 3px;
     border: none;
@@ -70,80 +88,80 @@ $gray: #92959E;
     width: 90%;
     font-size: 14px;
   }
-  
+
   .fa-search {
     position: relative;
     left: -25px;
   }
-  
+
   ul {
     padding: 20px;
     height: 770px;
-    
+
     li {
       padding-bottom: 20px;
       list-style: none;
     }
   }
-  
+
   img {
     float: left;
   }
-  
+
   .about {
     float: left;
     margin-top: 8px;
   }
-  
+
   .about {
     padding-left: 8px;
   }
-  
+
   .status {
     color: $gray;
   }
-  
+
 }
 
 /* chat */
 
 .chat {
-  float:left;
+  float: left;
   width: 400px;
   margin-top: 77px;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  
+
   color: #434651;
-  
-  li{
+
+  li {
     list-style: none;
   }
-  
+
   .chat-header {
     padding: 20px;
     border-bottom: 2px solid white;
-    
+
     img {
       float: left;
     }
-    
+
     .chat-about {
       float: left;
       padding-left: 10px;
       margin-top: 6px;
     }
-    
+
     .chat-with {
       font-weight: bold;
       font-size: 16px;
     }
-    
+
     .chat-num-messages {
       color: $gray;
     }
-    
+
     .fa-star {
       float: right;
       color: rebeccapurple;
@@ -151,23 +169,23 @@ $gray: #92959E;
       margin-top: 12px;
     }
   }
-  
+
   .chat-history {
     padding: 30px 20px 20px 0px;
     border-bottom: 2px solid white;
     overflow-y: scroll;
     height: 575px;
-    
+
     .message-data {
       margin-bottom: 15px;
     }
-    
+
     .message-data-time {
       color: lighten($gray, 8%);
       padding-left: 6px;
     }
-    
-    .message {      
+
+    .message {
       color: white;
       padding: 18px 20px;
       line-height: 26px;
@@ -176,7 +194,7 @@ $gray: #92959E;
       margin-bottom: 30px;
       width: 90%;
       position: relative;
-      
+
       &:after {
         bottom: 100%;
         left: 7%;
@@ -191,25 +209,25 @@ $gray: #92959E;
         margin-left: -10px;
       }
     }
-    
+
     .my-message {
       background: $green;
     }
-    
+
     .other-message {
       background: $blue;
-      
+
       &:after {
         border-bottom-color: $blue;
         left: 93%;
       }
     }
-    
+
   }
-  
+
   .chat-message {
     padding: 30px 10px;
-    
+
     textarea {
       width: 100%;
       padding: 10px 20px;
@@ -218,12 +236,12 @@ $gray: #92959E;
       border-radius: 5px;
       resize: none;
     }
-    
+
     .fa-file-o, .fa-file-image-o {
       font-size: 16px;
       color: gray;
       cursor: pointer;
-      
+
     }
 
     input[type=submit] {
@@ -235,7 +253,7 @@ $gray: #92959E;
       cursor: pointer;
       font-weight: bold;
       background: #F2F5F8;
-      
+
       &:hover {
         color: darken($blue, 7%);
       }
@@ -244,14 +262,14 @@ $gray: #92959E;
 }
 
 .online, .offline, .me {
-    margin-right: 3px;
-    font-size: 10px;
-  }
-  
+  margin-right: 3px;
+  font-size: 10px;
+}
+
 .online {
   color: $green;
 }
-  
+
 .offline {
   color: $orange;
 }
@@ -277,10 +295,10 @@ $gray: #92959E;
 }
 
 .clearfix:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }

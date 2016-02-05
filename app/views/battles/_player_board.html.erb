@@ -3,15 +3,16 @@
   $(function () {
     <% if @player_board.nil? %>
 
-    console.log(<%= @player_board %>)
+    console.log("player board <%= @player_board %>");
 
 
     var placementBoard = placementBoard();
 
     $('#enemy-board').hide();
+    $('#btnGiveUp').hide();
     $('#battle-field').append(placementBoard);
     $('#player-board').addClass('placementBoard');
-    $('#messages').text("Place your ships");
+    $('#messages').text("Place your ships").removeClass().addClass("bg-info");
 
 
     $('.ship').draggable({
@@ -132,6 +133,7 @@
 
     function placementBoard() {
       var placementBoard =
+          '<div id="placementBoard">' +
           '<div id="shipSelection">' +
           '<div id="shipYard">' +
           '<div class="ship" id="aircraft"></div>' +
@@ -147,6 +149,7 @@
           '<form>' +
           '<a href="#" id="ready" class="btn btn-primary btn-lg btn-block alt">Ready</a>' +
           '</form>' +
+          '</div>' +
           '</div>';
       return placementBoard;
     }
@@ -155,6 +158,7 @@
     // here will render the board
     $("#enemy-board").children().append("<span class='hole'></span>");
     $("#enemy-board").show();
+    $('#btnGiveUp').show();
 
     var playerBoard = $('#player-board');
 

@@ -1,16 +1,20 @@
 <div class="col-md-8">
-  <div>
-    <h1 id="messages"></h1>
+  <div id="info-div">
+
+    <div id="messages"></div>
+    <div id="btnGiveUp">
+      <%= button_to "Give Up", finish_path(@battle), class: "btn btn-warning", :remote => true %>
+    </div>
   </div>
 
   <div>
-    <% # = button_to "attack", attack_path(@battle), class: "test", :remote => true %>
+    <% # = button_to "Give Up", finish_path(@battle), class: "btn btn-lg", :remote => true %>
   </div>
 
     <div id="battle-field" data-player-id="player_<%= current_user.id %>"
          data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
 
-      <%= render('battles/player_board') %>
+      <%= render partial: 'battles/player_board' %>
       <div id="player-board" class="board" >
 
       </div>
