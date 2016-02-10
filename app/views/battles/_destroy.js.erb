@@ -1,4 +1,14 @@
-$('#battle-field').hide();
-$('#btnGiveUp').hide();
+$('#battle-field').remove();
+$('#btnGiveUp').remove();
 $("#messages").text("").removeClass();
 console.log("inside destroy");
+var result = "<div class='well'><div class='";
+if(<%= @winner == current_user %>){
+  result+= "winner'>";
+}
+else{
+  result+= "gameover'>";
+}
+result += "</div></div>";
+console.log("<%= @winner %>");
+$("#battle").append(result);

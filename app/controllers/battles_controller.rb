@@ -1,11 +1,11 @@
 class BattlesController < ApplicationController
   include BattlesHelper
-  before_action :get_battle, except:[:create]
+  before_action :get_battle, except: [:create]
 
   def create
     Rails.logger.debug params.inspect
-    if Battle.between(params[:player_id],params[:enemy_id]).present?
-      @battle = Battle.between(params[:player_id],params[:enemy_id]).first
+    if Battle.between(params[:player_id], params[:enemy_id]).present?
+      @battle = Battle.between(params[:player_id], params[:enemy_id]).first
 
     else
       @battle = Battle.new
@@ -20,7 +20,7 @@ class BattlesController < ApplicationController
     redirect_to battle_path(@battle)
 
   end
-  
+
   def show
     @enemy = enemy(@battle)
     @player_board = player_board(@battle)
@@ -30,7 +30,7 @@ class BattlesController < ApplicationController
   def edit
     @player_board = player_board(@battle)
 
-    PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board ##{params[:attack]}').addClass('target');" )
+    PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board ##{params[:attack]}').addClass('target');")
 
     respond_to do |format|
       #format.html { render :nothing => true }
@@ -52,12 +52,18 @@ class BattlesController < ApplicationController
   end
 
   def destroy
-    @battle.player_board = nil
-    @battle.enemy_board = nil
-    @battle.save
+    if params[:winner]
+      @battle.player_board = nil
+      @battle.enemy_board = nil
+      @battle.save
+      @winner = current_user
+    else
+      @winner = enemy @battle
+      PrivatePub.publish_to("/user_#{enemy_id @battle}",  "$.post('#{finish_path(@battle)}',{winner: true});");
+    end
 
     respond_to do |format|
-      format.js   { j render partial: 'destroy' }
+      format.js { j render partial: 'destroy' }
     end
   end
 

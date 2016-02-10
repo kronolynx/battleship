@@ -1,15 +1,15 @@
-<div class="col-md-8">
+<div class="col-md-8" id="battle">
   <div id="info-div">
 
     <div id="messages"></div>
     <div id="btnGiveUp">
-      <%= button_to "Give Up", finish_path(@battle), class: "btn btn-warning", :remote => true %>
+      <%= button_to "Give Up", finish_path(@battle), class: "btn btn-warning", :winner => false,  :remote => true %>
     </div>
   </div>
 
-  <div>
+  <!--<div>
     <% # = button_to "Give Up", finish_path(@battle), class: "btn btn-lg", :remote => true %>
-  </div>
+  </div>-->
 
     <div id="battle-field" data-player-id="player_<%= current_user.id %>"
          data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">

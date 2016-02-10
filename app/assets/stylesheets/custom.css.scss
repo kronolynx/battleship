@@ -11,6 +11,22 @@ $gray: #92959E;
   padding-left: 0;
 }
 
+.endGame {
+
+}
+
+.winner {
+  width: 256px;
+  height: 256px;
+  background-image: asset-data-url('medal.png') ;
+}
+
+.gameover{
+  width: 549px;
+  height: 245px;
+  background-image: asset_data_url('gameover.png');
+}
+
 #info-div {
   width: 400px;
   margin: 7px;
