@@ -11,4 +11,7 @@ module BattlesHelper
   def player_board(battle)
     @battle.player_id == current_user.id ? @battle.player_board : @battle.enemy_board
   end
+  def enemy_board(battle)
+    @battle.player_id == current_user.id ?  @battle.enemy_board : @battle.player_board
+  end
 end

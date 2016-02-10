@@ -28,7 +28,7 @@
       tolerance: "intersect",
       accept: ".ship",
       drop: function (event, ui) {
-        if(!checkCollision(getShipId(ui.draggable), calculateShipPosition(ui.draggable, getShipId($(this)))))
+        if (!checkCollision(getShipId(ui.draggable), calculateShipPosition(ui.draggable, getShipId($(this)))))
           appendShip(ui.draggable, getShipId($(this)));
         else {
           var position = $("#" + getShipAppendedPosition(ui.draggable)).position();
@@ -57,12 +57,12 @@
      * Append ship to board
      */
     function appendShip(ship, pos) {
-        ship.detach().appendTo($("#" + calculateShipPosition(ship, pos)));
+      ship.detach().appendTo($("#" + calculateShipPosition(ship, pos)));
     }
 
     function calculateShipPosition(ship, pos) {
       var shipId = ship.attr("id");
-      var headPos ="";
+      var headPos = "";
       if (shipId.indexOf("aircraft") > -1) {
         headPos = pos - (2 * getStep(shipId));
       }
@@ -122,11 +122,6 @@
     }
 
 
-
-
-
-
-
     $("#ready").click(function () {
       setBoardPlacement();
     });
@@ -156,65 +151,59 @@
 
     <% else %>
     // here will render the board
-    $("#enemy-board").children().append("<span class='hole'></span>");
+
     $("#enemy-board").show();
     $('#btnGiveUp').show();
 
-    var playerBoard = $('#player-board');
 
     var board = "<%= @player_board %>";
     displayPlayerShips(board);
-    //enemyBoard.highlight("#enemy-board .seaBox");
-
-    // class
-    /*var enemyBoard = {
-      // add variables to save stuff
-      highlight: function (seaBox) {
-        $(seaBox).on("mouseenter", function () {
-          $(this).addClass("target");
-        });
-        $(seaBox).on("mouseleave", function () {
-          $(this).removeClass("target");
-        });
-        $(seaBox).on("click", function () {
-          //alert($(this).attr('class'));
-          $(this).children().addClass("miss");
-          //console.log();
-
-          var battleField = $('#battle-field');
-          var battleId = battleField.data('battleId');
-          // TODO check if is working if not just remove substring because seabox all id was posN now ID is just N
-          var attack = $(this).attr("id");
-          //var attack = $(this).attr("id").substring(3);
-          //var playerId = battleField.data('playerId');
-          //var enemyId = battleField.data('enemyId');
-
-          //console.log(battleId + " " + enemyId);
-
-          $.ajax({
-            url: "/battle/"+ battleId + "/edit?attack=" + attack,
-            type: "post",
-            success: function(){
-              console.log('successful attack');
-            },
-            error:function(){
-              alert('Error');
-            }
-          });
-
-
-
-          /!*if ((this).hasClass('ship')) {
-           $(this).addClass("hit");
-           } else {
-           $(this).addClass("miss");
-           alert("clicked");
-
-           }*!/
-        });
-      }
-    };*/
+    readyToAttack(<%= current_user.id == @battle.active_player %>);
 
     <% end %>
-  })
+  });
+  /**
+   * function that allows to attack the other player
+   * required here because must access the variables in the controller
+   */
+  function activateClick() {
+    $("#messages").text("Ready to attack !!").removeClass().addClass("bg-success");
+    $('#enemy-board .seaBox').on("mouseenter", function () {
+      $(this).addClass("target");
+    });
+    $('#enemy-board .seaBox').on("mouseleave", function () {
+      $(this).removeClass("target");
+    });
+    $("#enemy-board").on("click", function () {
+
+      var battleId = "<%= @battle.id %>";
+      var attack = $(this).attr("id");
+
+      $.ajax({
+        url: "/battle/" + battleId + "/edit?attack=" + attack,
+        type: "post",
+        success: function () {
+          deactivateClick();
+          console.log('successful attack');
+        },
+        error: function () {
+          alert('Error');
+        }
+
+      });
+    });
+  }
+  /**
+   * function that tell us to wait while the other player attacks
+   * required here because must access the variables in the controller
+   */
+  function deactivateClick() {
+    $("#messages").text("Waiting for enemy").removeClass().addClass("bg-danger");
+    $("#enemy-board").off("click");
+    $("#enemy-board .seaBox").off("mouseenter");
+    $("#enemy-board .seaBox").off("mouseleave", function () {
+      $(this).removeClass("target");
+    });
+  }
+
 </script>

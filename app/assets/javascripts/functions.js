@@ -121,10 +121,15 @@ function charFromShipId(shipId){
     return ships[1][ships[0].indexOf(shipId)];
 }
 
-function getNextChar(char){
-    return String.fromCharCode(char.charCodeAt(0) + 1);
+
+function readyToAttack(isPlayerTurn) {
+    if (isPlayerTurn )
+    {
+        activateClick();
+    }
+    else
+    {
+        deactivateClick();
+    }
 }
 
-function getPrevChar(char){
-    return String.fromCharCode(char.charCodeAt(0) + 1);
-}

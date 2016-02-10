@@ -24,18 +24,23 @@ class BattlesController < ApplicationController
   def show
     @enemy = enemy(@battle)
     @player_board = player_board(@battle)
+    @shooting = current_user.id == @battle.active_player
   end
 
 
   def edit
+    if current_user.id == @battle.active_player
+      PrivatePub.publish_to("/user_#{enemy_id @battle}", "activateClick();$('#player-board ##{params[:attack]}').addClass('target');console.log('attack');")
+      @battle.active_player = enemy_id @battle
+      @battle.save
+    else
+
+
+    end
     @player_board = player_board(@battle)
-
-    PrivatePub.publish_to("/user_#{enemy_id @battle}", "$('#player-board ##{params[:attack]}').addClass('target');")
-
     respond_to do |format|
-      #format.html { render :nothing => true }
-      #format.html { redirect_to battle_path(@battle) }
       format.js { render :nothing => true }
+      #format.js { j render partial: 'edit' }
     end
   end
 
@@ -44,8 +49,17 @@ class BattlesController < ApplicationController
     @battle.player_id == current_user.id ? @battle.player_board = params[:board] : @battle.enemy_board= params[:board]
     @battle.save
     @player_board = player_board(@battle)
-    # todo if the other enemy board is not null then do something else tell the other player that this player is waiting
 
+    if enemy_board(@battle).nil?
+      @waiting = true
+      PrivatePub.publish_to("/user_#{enemy_id @battle}", '$("#messages").text("Enemy is ready").removeClass().addClass("bg-info");')
+    else
+      @waiting = false
+      @battle.active_player = enemy_id @battle
+      @battle.save
+      PrivatePub.publish_to("/user_#{enemy_id @battle}", "activateClick();console.log('ready to attack');")
+    end
+    # here must go an else in case both are ready we will set the turn to the other player
     respond_to do |format|
       format.js { j render partial: 'ready' }
     end
@@ -55,10 +69,15 @@ class BattlesController < ApplicationController
     if params[:winner]
       @battle.player_board = nil
       @battle.enemy_board = nil
+      @battle.active_player = nil
       @battle.save
       @winner = current_user
+      @winner.wins = @winner.wins + 1
+      @winner.save
     else
       @winner = enemy @battle
+      current_user.losses = current_user.losses + 1
+      current_user.save
       PrivatePub.publish_to("/user_#{enemy_id @battle}",  "$.post('#{finish_path(@battle)}',{winner: true});");
     end
 

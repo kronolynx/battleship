@@ -7,11 +7,13 @@ in case the player leaves the game can be loaded later on.
  */
 
 // here will be the player board update
-$('#finalbattle').html("Player <%= current_user.username %>, enemy <%= enemy(@battle).username %>");
+//$('#finalbattle').html("Player < %= current_user.username %>, enemy < %= enemy(@battle).username %>");
 
-console.log("hey dude keep it up!!");
+console.log("inside edit!");
+console.log("<%= @player_board %>");
+console.log("edit shooting? <%= @shooting %>");
 
 // here will be the enemy board update
-<% publish_to "/user_#{enemy_id @battle}" do %>
+/*< % publish_to "/user_#{enemy_id @battle}" do %>
  // do the attacks here ,
-<% end %>
+< % end %> */

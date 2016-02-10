@@ -69,6 +69,8 @@
 }
 
 #aircraftV {
+  height: 200px;
+  width: 40px;
   background: asset-data-url('shipLongV.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -85,6 +87,8 @@
   background-size: cover;
 }
 #cruiser1V {
+  height: 120px;
+  width: 40px;
   background: asset-data-url('ship3v.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -103,6 +107,8 @@
 }
 
 #cruiser2V {
+  height: 120px;
+  width: 40px;
   background: asset-data-url('ship1v.png');
   background-repeat: no-repeat;
   background-position: 0;
@@ -120,6 +126,8 @@
 }
 
 #destroyer1V {
+  height: 79px;
+  width: 40px;
   background: asset-data-url('ship2v.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -135,6 +143,8 @@
 }
 
 #destroyer2V{
+  height: 79px;
+  width: 40px;
   background: asset-data-url('ship4v.png');
   background-size: contain;
   background-repeat: no-repeat;
