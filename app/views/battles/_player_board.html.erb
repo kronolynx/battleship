@@ -112,14 +112,15 @@
    * required here because must access the variables in the controller
    */
   function activateClick() {
+    var enemySeabox = $('#enemy-board .seaBox');
     $("#messages").text("Ready to attack !!").removeClass().addClass("bg-success");
-    $('#enemy-board .seaBox').on("mouseenter", function () {
+    enemySeabox.on("mouseenter", function () {
       $(this).addClass("target");
     });
-    $('#enemy-board .seaBox').on("mouseleave", function () {
+    enemySeabox.on("mouseleave", function () {
       $(this).removeClass("target");
     });
-    $("#enemy-board").on("click", function () {
+    enemySeabox.on("click", function () {
 
       var battleId = "<%= @battle.id %>";
       var attack = $(this).attr("id");
@@ -144,11 +145,16 @@
    */
   function deactivateClick() {
     $("#messages").text("Waiting for enemy").removeClass().addClass("bg-danger");
-    $("#enemy-board").off("click");
-    $("#enemy-board .seaBox").off("mouseenter");
-    $("#enemy-board .seaBox").off("mouseleave", function () {
-      $(this).removeClass("target");
-    });
+    var enemySeabox = $('#enemy-board .seaBox');
+    disableSeaBox(enemySeabox);
+
   }
+    function disableSeaBox(enemySeabox){
+      enemySeabox.off("click");
+      enemySeabox.off("mouseenter");
+      enemySeabox.off("mouseleave", function () {
+        $(this).removeClass("target");
+      });
+    }
 
 </script>

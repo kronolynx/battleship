@@ -158,11 +158,18 @@
   height: 40px;
   padding: 0;
   background-color: black;
-
 }
 
 
-
+.explosion{
+  position: absolute;
+  margin-left: 10px;
+  height: 24px;
+  width: 24px;
+  background-image: asset_data_url('explosion.gif');
+  background-size: contain;
+  z-index:1 !important;
+}
 
 
 

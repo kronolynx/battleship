@@ -14,11 +14,21 @@ function generateBoard() {
 function displayPlayerShips(board){
     var ignoreChar = "x"
     for(var i = 0; i < 100; i++){
-        if(ignoreChar.indexOf(board[i]) == -1){
-            setShip(i, board[i]);
+        var char = charWithoutAttack(board[i]);
+        if(ignoreChar.indexOf(char) == -1){
+            setShip(i, char);
             ignoreChar+= board[i];
+            if(char != board[i]){
+                ignoreChar+= char;
+            }
+        }else if(board[i] != 'x' && board.charCodeAt(i) % 2 == 0){
+            $("#" + i).append("<div class='explosion'></div>");
         }
     }
+}
+
+function charWithoutAttack(char){
+    return  char.charCodeAt(0) % 2 == 0 ? String.fromCharCode(char.charCodeAt(0) - 1) : char;
 }
 
 function setShip(pos, char){
@@ -106,30 +116,47 @@ function getStepById(shipId) {
     //console.log(getShipId(ship) + " step " + (getShipId(ship).indexOf('V') > -1 ? 10 : 1 ));
     return shipId.indexOf('V') > -1 ? 10 : 1;
 }
-
+/**
+ * Get the position of the tail
+ * @param ship
+ * @returns {number}
+ */
 function getShipTail(ship) {
     return getShipTailCalculated(getShipAppendedPosition(ship), getShipSize(ship), getStep(ship));
 }
-
-function getShipTailCalculated(calculatedPosition, size, step) {
-    return (parseInt(calculatedPosition) + ((parseInt(size) - 1) * step));
+/**
+ * Get the position of the tail based on the position , size and step
+ * @param position
+ * @param size
+ * @param step
+ * @returns {number}
+ */
+function getShipTailCalculated(position, size, step) {
+    return (parseInt(position) + ((parseInt(size) - 1) * step));
 }
 
-
-
 /**
- *
+ * get the id of the div where the ships is appended
  * @param ship object
  * @returns {string}
  */
 function getShipAppendedPosition(ship) {
     return ship.parent().attr('id');
 }
-
+/**
+ * get the ship Id
+ * @param ship
+ * @returns string
+ */
 function getShipId(ship) {
     return ship.attr("id");
 }
 
+/**
+ * from a char get the shipId
+ * @param char
+ * @returns {*}
+ */
 function shipIdFromChar(char){
     return ships[0][ships[1].indexOf(char)];
 }
@@ -142,18 +169,18 @@ function charFromShipId(shipId){
     return ships[1][ships[0].indexOf(shipId)];
 }
 
-
+/**
+ * activate shooting depending if is the players turn
+ * @param isPlayerTurn
+ */
 function readyToAttack(isPlayerTurn) {
-    if (isPlayerTurn )
-    {
-        activateClick();
-    }
-    else
-    {
-        deactivateClick();
-    }
+    isPlayerTurn ? activateClick() : deactivateClick();
 }
-
+/**
+ *  check if the position of the ship is inside the board
+ * @param ship
+ * @returns {boolean}
+ */
 function isValidPosition(ship){
     // when horizontal the step is 10 because we calculate for a vertical ship and the difference is 10 boxes
     // the tail must be in a position that is less than 100
@@ -178,7 +205,12 @@ function isHorizontal(ship){
 function appendShip(ship, pos) {
     ship.detach().appendTo($("#" + calculateShipPosition(getShipId(ship), pos)));
 }
-
+/**
+ * when the ship is dragged the position detected is in the middle of the ship so we need to recalculate it to get the top left box
+ * @param shipId
+ * @param pos
+ * @returns {string}
+ */
 function calculateShipPosition(shipId, pos) {
     var headPos = "";
     if (shipId.indexOf("aircraft") > -1) {
