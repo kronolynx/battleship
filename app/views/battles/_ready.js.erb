@@ -3,6 +3,7 @@ $("#btnGiveUp").show();
 $("#enemy-board").show();
 $(".ship").draggable("destroy");
 $(".seaBox").droppable("destroy");
+$(".ship").off("dblclick");
 
 $("#messages").text("Waiting for the enemy").removeClass().addClass("bg-info");
 

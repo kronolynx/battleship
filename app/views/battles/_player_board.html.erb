@@ -28,7 +28,7 @@
       tolerance: "intersect",
       accept: ".ship",
       drop: function (event, ui) {
-        if (!checkCollision(getShipId(ui.draggable), calculateShipPosition(ui.draggable, getShipId($(this)))))
+        if (!checkCollisionById(getShipId(ui.draggable), calculateShipPosition(getShipId(ui.draggable), getShipId($(this)))))
           appendShip(ui.draggable, getShipId($(this)));
         else {
           var position = $("#" + getShipAppendedPosition(ui.draggable)).position();
@@ -41,85 +41,30 @@
     });
 
     $(".ship").dblclick(function () {
-      var ship_id = getShipId($(this));
-      var height = $(this).css("height");
-      var width = $(this).css("width");
+      var ship = $(this);
+      // check if the tail of the ship is inside the board
+      if(isValidPosition(ship)){
+        var ship_id = getShipId(ship);
+        var shipPostfix = ship_id.charAt(ship_id.length - 1)
+        var new_ship_id =  shipPostfix == 'V' ? ship_id.slice(0, -1) : ship_id + "V";
 
-      ship_id = ship_id.charAt(ship_id.length - 1) == 'V' ? ship_id.slice(0, -1) : ship_id + "V";
+        // check if with the new id there's collisions if not then sets the dimensions of the ship else undo the change
+        ship.attr("id", new_ship_id);
+        if(!checkCollision(ship)){
+          var height = ship.css("height");
+          var width = ship.css("width");
 
-      $(this).css("height", width);
-      $(this).css("width", height);
-      $(this).attr("id", ship_id);
+          ship.css("height", width);
+          ship.css("width", height);
+        }else {
+          ship.attr("id", ship_id);
+        }
 
+
+      }
     });
 
-    /**
-     * Append ship to board
-     */
-    function appendShip(ship, pos) {
-      ship.detach().appendTo($("#" + calculateShipPosition(ship, pos)));
-    }
 
-    function calculateShipPosition(ship, pos) {
-      var shipId = ship.attr("id");
-      var headPos = "";
-      if (shipId.indexOf("aircraft") > -1) {
-        headPos = pos - (2 * getStep(shipId));
-      }
-      else if (shipId.indexOf("cruiser") > -1) {
-        headPos = pos - (1 * getStep(shipId));
-      } else {
-        headPos = pos;
-      }
-      return headPos;
-    }
-
-    /**
-     * Check if there's collision
-     * @param shipId id of dragged ship
-     * @param shipPos position of the ship
-     * return true if collision found
-     */
-    function checkCollision(shipId, shipPos) {
-      var collision = false;
-      $(".ship").each(function () {
-        var ship = $(this);
-        var otherId = getShipId(ship);
-        var otherPos = getShipAppendedPosition(ship);
-        if (shipId != otherId && shipPos != "shipYard") {
-          if (comparePosition(shipPos, otherPos, getShipSize(shipId), getShipSize(otherId), getStep(shipId), getStep(otherId))) {
-            collision = true;
-            return false;
-          }
-        }
-      });
-      return collision;
-    }
-
-    /**
-     *
-     * @param posDragged position of the dragged ship
-     * @param pos2 position of the other ship
-     * @param size1 size of the ship at pos1
-     * @param size2 size of the ship at pos2
-     * @param step1 if is horizontal the step 1
-     * @param step2 if is vertical the step is 10
-     */
-    function comparePosition(posDragged, pos2, size1, size2, step1, step2) {
-
-      if (pos2 != "shipYard") {
-        var tailShip1 = getShipTail(posDragged, size1, step1);
-        var tailShip2 = getShipTail(pos2, size2, step2);
-        for (var i = parseInt(posDragged); i <= tailShip1; i += step1) {
-          for (var k = parseInt(pos2); k <= tailShip2; k += step2) {
-            if (k == i) {
-              return true;
-            }
-          }
-        }
-      }
-      return false;
-    }
 
 
     $("#ready").click(function () {

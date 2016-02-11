@@ -9,6 +9,8 @@ function generateBoard() {
     return board;
 }
 
+
+
 function displayPlayerShips(board){
     var ignoreChar = "x"
     for(var i = 0; i < 100; i++){
@@ -29,14 +31,15 @@ function setShip(pos, char){
 function setBoardPlacement() {
     // TODO ecmascript6 use for loop instead because old browsers may not work
 
-    var boardArray = Array(100).fill('x')
+    var boardArray = Array(100).fill('x');
     var boardString = "";
     $(".ship").each(function () {
-        var head = getShipAppendedPosition($(this));
+        var ship = $(this);
+        var head = getShipAppendedPosition(ship);
         if (head != "shipYard") {
-            var shipId = getShipId($(this));
-            var step = getStep(shipId);
-            var tail = getShipTail(head, getShipSize(shipId), step);
+            var shipId = getShipId(ship);
+            var step = getStep(ship);
+            var tail = getShipTail(ship);
 
             for (var i = parseInt(head); i <= tail; i += step) {
                 boardArray[i] = charFromShipId(shipId);
@@ -70,12 +73,15 @@ function setBoardPlacement() {
     }
 }
 
+function getShipSize(ship){
+    return getShipSizeById(getShipId(ship));
+}
 /**
  *
  * @param shipId  id of the ship
  * @returns {number}
  */
-function getShipSize(shipId) {
+function getShipSizeById(shipId) {
     var size = 0;
     if (shipId.indexOf("aircraft") > -1) {
         size = 5;
@@ -84,21 +90,32 @@ function getShipSize(shipId) {
     } else {
         size = 2;
     }
+    //console.log(shipId + " size " + size);
     return size;
 }
 
 /**
  *
- * @param shipId
- * @returns {number}
+ * @param ship
+ * @returns {number} or NAN if the ship is in the shipyard
  */
-function getStep(shipId) {
+function getStep(ship) {
+    return getStepById(getShipId(ship))
+}
+function getStepById(shipId) {
+    //console.log(getShipId(ship) + " step " + (getShipId(ship).indexOf('V') > -1 ? 10 : 1 ));
     return shipId.indexOf('V') > -1 ? 10 : 1;
 }
 
-function getShipTail(head, size, step) {
-    return (parseInt(head) + ((parseInt(size) - 1) * step));
+function getShipTail(ship) {
+    return getShipTailCalculated(getShipAppendedPosition(ship), getShipSize(ship), getStep(ship));
 }
+
+function getShipTailCalculated(calculatedPosition, size, step) {
+    return (parseInt(calculatedPosition) + ((parseInt(size) - 1) * step));
+}
+
+
 
 /**
  *
@@ -116,7 +133,11 @@ function getShipId(ship) {
 function shipIdFromChar(char){
     return ships[0][ships[1].indexOf(char)];
 }
-
+/**
+ *
+ * @param shipId
+ * @returns the char equivalent for this ship to use in the string board array
+ */
 function charFromShipId(shipId){
     return ships[1][ships[0].indexOf(shipId)];
 }
@@ -131,5 +152,94 @@ function readyToAttack(isPlayerTurn) {
     {
         deactivateClick();
     }
+}
+
+function isValidPosition(ship){
+    // when horizontal the step is 10 because we calculate for a vertical ship and the difference is 10 boxes
+    // the tail must be in a position that is less than 100
+    var head = getShipAppendedPosition(ship);
+    var shipSize = getShipSize(ship);
+    return (isHorizontal(ship) && getShipTailCalculated(head,shipSize, 10) < 100) ||
+           (isVertical(ship) && (( head % 10) <  (getShipTailCalculated(head,shipSize, 1) % 10 )));
+}
+
+function isVertical(ship){
+    return getShipId(ship).indexOf('V') > -1 ;
+}
+
+function isHorizontal(ship){
+    return !isVertical(ship);
+}
+
+
+/**
+ * Append ship to board
+ */
+function appendShip(ship, pos) {
+    ship.detach().appendTo($("#" + calculateShipPosition(getShipId(ship), pos)));
+}
+
+function calculateShipPosition(shipId, pos) {
+    var headPos = "";
+    if (shipId.indexOf("aircraft") > -1) {
+        headPos = pos - (2 * getStepById(shipId));
+    }
+    else if (shipId.indexOf("cruiser") > -1) {
+        headPos = pos - (1 * getStepById(shipId));
+    } else {
+        headPos = pos;
+    }
+    return headPos;
+}
+
+function checkCollision(ship){
+    return checkCollisionById(getShipId(ship), getShipAppendedPosition(ship));
+}
+/**
+ * Check if there's collision
+ * @param shipId id of dragged ship
+ * @param shipPos position of the ship
+ * return true if collision found
+ */
+function checkCollisionById(shipId, shipPos) {
+    var collision = false;
+    $(".ship").each(function () {
+        var otherShip = $(this);
+        var otherId = getShipId(otherShip);
+        var otherPos = getShipAppendedPosition(otherShip);
+        if (shipId != otherId && shipPos != "shipYard") {
+            if (comparePosition(shipPos, otherPos, getShipSizeById(shipId), getShipSizeById(otherId), getStepById(shipId), getStepById(otherId))) {
+                collision = true;
+                // return false to break out of the loop
+                return false;
+            }
+        }
+    });
+    return collision;
+}
+
+/**
+ *
+ * @param calculatedPosShipDragged position of the dragged ship
+ * @param pos2 position of the other ship
+ * @param size1 size of the ship at pos1
+ * @param size2 size of the ship at pos2
+ * @param step1 if is horizontal the step 1
+ * @param step2 if is vertical the step is 10
+ */
+function comparePosition(calculatedPosShipDragged, pos2, size1, size2, step1, step2) {
+
+    if (pos2 != "shipYard") {
+        var tailShip1 = getShipTailCalculated(calculatedPosShipDragged, size1, step1);
+        var tailShip2 = getShipTailCalculated(pos2, size2, step2);
+        for (var i = parseInt(calculatedPosShipDragged); i <= tailShip1; i += step1) {
+            for (var k = parseInt(pos2); k <= tailShip2; k += step2) {
+                if (k == i) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
