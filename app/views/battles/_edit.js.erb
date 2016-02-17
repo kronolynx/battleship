@@ -1,7 +1,14 @@
-
+var shot = $("#enemy-board #<%= @attack %>");
+if(<%= @hit %>){
+  shot.children().addClass("hit");
+}
+else
+{
+  shot.children().addClass("miss");
+}
+shot.addClass("");
 <% if @game_over %>
   <% publish_to "/user_#{enemy_id}" do %>
-    console.log("/battle/<%= @battle.id %>/finish?winner=false");
     $.post("/battle/<%= @battle.id %>/finish?winner=false");
   <% end %>
 <% end %>

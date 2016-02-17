@@ -63,10 +63,6 @@ function displayEnemyBoard(board){
     }
 }
 
-function isHit(attack, board){
-    console.log(attack + " <> " + board);
-    return ("acegikmoqs".indexOf(board[attack]) != -1);
-}
 
 function charWithoutAttack(char){
     return  char.charCodeAt(0) % 2 == 0 ? String.fromCharCode(char.charCodeAt(0) - 1) : char;
@@ -107,12 +103,10 @@ function setBoardPlacement() {
         var battleId = battleField.data('battleId');
         var playerId = battleField.data('playerId');
 
-        //alert(battleId);
         $.ajax({
             url: "/battle/"+ battleId + "/ready?board=" + boardString,
             type: "post",
             success: function(e){
-
                 console.log('ready');
             },
             error:function(e){
@@ -141,7 +135,6 @@ function getShipSizeById(shipId) {
     } else {
         size = 2;
     }
-    //console.log(shipId + " size " + size);
     return size;
 }
 
@@ -154,7 +147,6 @@ function getStep(ship) {
     return getStepById(getShipId(ship))
 }
 function getStepById(shipId) {
-    //console.log(getShipId(ship) + " step " + (getShipId(ship).indexOf('V') > -1 ? 10 : 1 ));
     return shipId.indexOf('V') > -1 ? 10 : 1;
 }
 /**

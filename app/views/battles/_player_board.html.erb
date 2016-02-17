@@ -2,10 +2,6 @@
 
   $(function () {
     <% if @player_board.nil? %>
-
-    console.log("player board <%= @player_board %>");
-
-
     var placementBoard = placementBoard();
 
     $('#enemy-board').hide();
@@ -130,13 +126,6 @@
 
       var battleId = "<%= @battle.id %>";
       var attack = $(this).attr("id");
-
-      if(isHit(attack, "<%= @enemy_board %>")){
-        $(this).children().addClass("hit");
-      }else{
-        $(this).children().addClass("miss");
-      }
-      $(this).addClass("shot");
 
       $.ajax({
         url: "/battle/" + battleId + "/edit?attack=" + attack,

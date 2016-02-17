@@ -1,6 +1,7 @@
 class BattlesController < ApplicationController
   include BattlesHelper
   before_action :get_battle, except: [:create]
+  before_action :set_boards, except: [:create, :destroy, :ready]
 
   def create
     Rails.logger.debug params.inspect
@@ -28,11 +29,14 @@ class BattlesController < ApplicationController
 
 
   def edit
+    # use a variable for hit and attack in order to use them from the view
+    @attack = params[:attack]
+    @hit = hit?(@attack)
     if current_user.id == @battle.active_player
-      if hit?(params[:attack])
-        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<div class='explosion'></div>\");console.log('attack' + '#{params[:attack]}');")
+      if @hit
+        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<div class='explosion'></div>\");")
       else
-        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<span class='hole miss'></span>\");console.log('attack' + '#{params[:attack]}');")
+        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<span class='hole miss'></span>\");")
       end
       @battle.active_player = enemy_id
       @battle.save
@@ -58,7 +62,6 @@ class BattlesController < ApplicationController
       @battle.save
       PrivatePub.publish_to("/user_#{enemy_id }", "activateClick();console.log('ready to attack');")
     end
-
     respond_to do |format|
       format.js { j render partial: 'ready' }
     end
@@ -89,7 +92,9 @@ class BattlesController < ApplicationController
   private
   def get_battle
     @battle = Battle.find(params[:id])
-    @player_board = player_board
-    @enemy_board = enemy_board
+  end
+  def set_boards
+  @player_board = player_board
+  @enemy_board = enemy_board
   end
 end
