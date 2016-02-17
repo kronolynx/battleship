@@ -51,11 +51,14 @@
         // check if with the new id there's collisions if not then sets the dimensions of the ship else undo the change
         ship.attr("id", new_ship_id);
         if(!checkCollision(ship)){
-          var height = ship.css("height");
-          var width = ship.css("width");
 
-          ship.css("height", width);
-          ship.css("width", height);
+          if(document.getBoxObjectFor != null || window.mozInnerScreenX != null) {
+            var height = ship.css("height");
+            var width = ship.css("width");
+
+            ship.css("height", width);
+            ship.css("width", height);
+          }
         }else {
           ship.attr("id", ship_id);
         }
@@ -102,7 +105,10 @@
 
 
     var board = "<%= @player_board %>";
+    var enemyBoard = "<%= @enemy_board %>"
     displayPlayerShips(board);
+    displayplayerAttacks(board);
+    displayEnemyBoard(enemyBoard);
     readyToAttack(<%= current_user.id == @battle.active_player %>);
 
     <% end %>
@@ -112,7 +118,7 @@
    * required here because must access the variables in the controller
    */
   function activateClick() {
-    var enemySeabox = $('#enemy-board .seaBox');
+    var enemySeabox = $('#enemy-board .seaBox:not(.shot)');
     $("#messages").text("Ready to attack !!").removeClass().addClass("bg-success");
     enemySeabox.on("mouseenter", function () {
       $(this).addClass("target");
@@ -124,6 +130,13 @@
 
       var battleId = "<%= @battle.id %>";
       var attack = $(this).attr("id");
+
+      if(isHit(attack, "<%= @enemy_board %>")){
+        $(this).children().addClass("hit");
+      }else{
+        $(this).children().addClass("miss");
+      }
+      $(this).addClass("shot");
 
       $.ajax({
         url: "/battle/" + battleId + "/edit?attack=" + attack,
@@ -144,7 +157,7 @@
    * required here because must access the variables in the controller
    */
   function deactivateClick() {
-    $("#messages").text("Waiting for enemy").removeClass().addClass("bg-danger");
+    $("#messages").text("Waiting for the enemy").removeClass().addClass("bg-danger");
     var enemySeabox = $('#enemy-board .seaBox');
     disableSeaBox(enemySeabox);
 

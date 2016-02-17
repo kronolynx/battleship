@@ -23,25 +23,24 @@ class BattlesController < ApplicationController
 
   def show
     @enemy = enemy
-    @player_board = player_board
     @shooting = current_user.id == @battle.active_player
   end
 
 
   def edit
     if current_user.id == @battle.active_player
-      @hit = hit?(params[:attack])
-      PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').addClass(#{@hit ? 'explosion': 'highlight'});console.log('attack' + '#{params[:attack]}');")
+      if hit?(params[:attack])
+        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<div class='explosion'></div>\");console.log('attack' + '#{params[:attack]}');")
+      else
+        PrivatePub.publish_to("/user_#{enemy_id}", "activateClick();$('#player-board ##{params[:attack]}').append(\"<span class='hole miss'></span>\");console.log('attack' + '#{params[:attack]}');")
+      end
       @battle.active_player = enemy_id
       @battle.save
+      @game_over = game_over?
     else
-
-
     end
-    @player_board = player_board
     respond_to do |format|
-      format.js { render :nothing => true }
-      #format.js { j render partial: 'edit' }
+      format.js { j render partial: 'edit' }
     end
   end
 
@@ -49,7 +48,6 @@ class BattlesController < ApplicationController
     # set the user board according , if is the user or the enemy
     @battle.player_id == current_user.id ? @battle.player_board = params[:board] : @battle.enemy_board= params[:board]
     @battle.save
-    @player_board = player_board
 
     if enemy_board.nil?
       @waiting = true
@@ -60,14 +58,15 @@ class BattlesController < ApplicationController
       @battle.save
       PrivatePub.publish_to("/user_#{enemy_id }", "activateClick();console.log('ready to attack');")
     end
-    # here must go an else in case both are ready we will set the turn to the other player
+
     respond_to do |format|
       format.js { j render partial: 'ready' }
     end
   end
 
   def destroy
-    if params[:winner]
+    # it looks redundant but params come as strings so I need to check that the strings equals 'true'
+    if params[:winner] == 'true'
       @battle.player_board = nil
       @battle.enemy_board = nil
       @battle.active_player = nil
@@ -90,5 +89,7 @@ class BattlesController < ApplicationController
   private
   def get_battle
     @battle = Battle.find(params[:id])
+    @player_board = player_board
+    @enemy_board = enemy_board
   end
 end

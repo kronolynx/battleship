@@ -1,14 +1,24 @@
-$('#battle-field').remove();
 $('#btnGiveUp').remove();
-$("#messages").text("").removeClass();
-console.log("inside destroy");
-var result = "<div class='well'><div class='";
+
+function closeModal(){
+  $("#game-over").modal('hide');
+}
+
+var result = "<div class='end-game ";
 if(<%= @winner == current_user %>){
-  result+= "winner'>";
+  $("#messages").text("You've won").removeClass().addClass("bg-success");
+  result+= "win'><a href='#' onclick='closeModal();' class='close'>X</a><div class='winner'>";
 }
 else{
-  result+= "gameover'>";
+  $("#messages").text("You've lost").removeClass().addClass("bg-danger");
+  result+= "lose'><a href='#' onclick='closeModal();' class='close'>X</a><div class='gameover'>";
 }
-result += "</div></div>";
-console.log("<%= @winner %>");
-$("#battle").append(result);
+result += "</div>" +
+    "<a href='/' class='btn btn-default'>Back Home</a></div>";
+
+var dialog = "<div class='modal fade' id='game-over'>" + result + "</div>"
+$("#battle-field").append(dialog);
+$("#game-over").modal('show');
+
+disableSeaBox($('#enemy-board .seaBox'));
+

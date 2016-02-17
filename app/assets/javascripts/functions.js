@@ -21,10 +21,51 @@ function displayPlayerShips(board){
             if(char != board[i]){
                 ignoreChar+= char;
             }
-        }else if(board[i] != 'x' && board.charCodeAt(i) % 2 == 0){
-            $("#" + i).append("<div class='explosion'></div>");
         }
     }
+}
+
+function displayplayerAttacks(board){
+    var ignoreChar = "xacegikmoqs"
+    for(var i = 0; i < 100; i++) {
+        var char = board[i];
+        if (ignoreChar.indexOf(char) == -1) {
+            var boardCell = $("#player-board #" + i);
+            if (char == 'y') {
+                boardCell.append("<span class='hole miss'></span>");
+            } else {
+                boardCell.append("<div class='explosion'></div>");
+            }
+        }
+    }
+
+
+    if(board[i] != 'x' && board.charCodeAt(i) % 2 == 0){
+
+    }
+}
+
+function displayEnemyBoard(board){
+    var ignoreChar = "xacegikmoqs"
+    for(var i = 0; i < 100; i++){
+        var char = board[i];
+        if(ignoreChar.indexOf(char) == -1){
+            var boardCell = $("#enemy-board #" + i);
+            if(char == 'y'){
+                boardCell.children().addClass("miss");
+            } else {
+                boardCell.children().addClass("hit");
+            }
+            boardCell.addClass("shot");
+            boardCell.off("click mouseenter");
+
+        }
+    }
+}
+
+function isHit(attack, board){
+    console.log(attack + " <> " + board);
+    return ("acegikmoqs".indexOf(board[attack]) != -1);
 }
 
 function charWithoutAttack(char){
@@ -32,7 +73,7 @@ function charWithoutAttack(char){
 }
 
 function setShip(pos, char){
-    $("#" + pos).append("<div class='ship' id='" + shipIdFromChar(char) + "'></div>")
+    $("#player-board #" + pos).append("<div class='ship' id='" + shipIdFromChar(char) + "'></div>")
 }
 
 /**

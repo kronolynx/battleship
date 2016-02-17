@@ -11,21 +11,51 @@ $gray: #92959E;
   padding-left: 0;
 }
 
-.endGame {
-
+.lose {
+  width: 496px;
 }
 
-.winner {
-  width: 256px;
-  height: 256px;
-  background-image: asset-data-url('medal.png') ;
+.win {
+  width: 413px;
 }
 
-.gameover{
-  width: 549px;
-  height: 245px;
-  background-image: asset_data_url('gameover.png');
+.end-game {
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  .close {
+    float: right;
+  }
+  .gameover {
+    width: 496px;
+    height: 275px;
+    background-image: asset_data_url('gameover.png');
+    background-repeat: no-repeat;
+  }
+  .winner {
+    width: 413px;
+    height: 346px;
+    background-image: asset-data-url('medal.png');
+    background-repeat: no-repeat;
+  }
 }
+
+.close {
+  background: #606061;
+  color: #FFFFFF;
+  text-align: center;
+  float: right;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 2px;
+  box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #00d9ff; }
+
+
 
 #info-div {
   width: 400px;
