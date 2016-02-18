@@ -25,7 +25,10 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'private_pub'
 gem 'thin'
 # upload avatar
-gem "paperclip", "~> 4.3"
+gem 'paperclip', '~> 4.3'
+
+# active admin
+gem 'activeadmin', github: 'activeadmin'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
