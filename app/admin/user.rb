@@ -1,4 +1,9 @@
 ActiveAdmin.register User do
+  controller do
+    def permitted_params
+      params.permit admin_user: [:id, :username, :wins, :losses, :email, :created_at, :updated_at, :encrypted_password]
+    end
+  end
   index do
     column :id
     column :username
@@ -12,5 +17,16 @@ ActiveAdmin.register User do
     column :created_at
     column :updated_at
 
+  end
+
+  csv do
+    column :id
+    column :username
+    column :wins
+    column :losses
+    column :email
+    column :created_at
+    column :updated_at
+    column :encrypted_password
   end
 end
