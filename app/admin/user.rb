@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+  active_admin_importable
   index do
     column :id
     column :username
@@ -11,6 +12,15 @@ ActiveAdmin.register User do
     column :failed_attempts
     column :created_at
     column :updated_at
-
+  end
+  csv do
+    column :id
+    column :username
+    column :wins
+    column :losses
+    column :email
+    column :created_at
+    column :updated_at
+    column :encrypted_password
   end
 end

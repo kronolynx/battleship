@@ -21,6 +21,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+
 # chat
 gem 'private_pub'
 gem 'thin'
@@ -29,6 +30,8 @@ gem 'paperclip', '~> 4.3'
 
 # active admin
 gem 'activeadmin', github: 'activeadmin'
+# active admin importable
+gem 'active_admin_importable'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
