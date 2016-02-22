@@ -1,0 +1,14 @@
+%h2 Import
+
+= form_tag(import_admin_battle_path(@battle), method: "post", multipart: true) do |f|
+
+  Field1:
+  = text_field_tag 'field1'
+  %br
+
+  %input(type="file" name="file" placeholder="File")
+  %br
+
+  = submit_tag "Upload"
+
+%br
