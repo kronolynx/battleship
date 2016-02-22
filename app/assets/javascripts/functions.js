@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    var board = generateBoard();
+    $(".board").append(board);
+    $("#enemy-board").children().append("<span class='hole'></span>");
+
+});
+
 var ships = [["aircraft", "aircraftV", "destroyer1", "destroyer1V", "destroyer2", "destroyer2V", "cruiser1", "cruiser1V", "cruiser2", "cruiser2V"],
     ['a', 'c', 'e', 'g', 'i', 'k', 'm', 'o', 'q', 's']];
 
@@ -27,7 +34,7 @@ function displayPlayerShips(board){
 
 function displayplayerAttacks(board){
     var ignoreChar = "xacegikmoqs"
-    for(var i = 0; i < board.length(); i++) {
+    for(var i = 0; i < board.length; i++) {
         var char = board[i];
         if (ignoreChar.indexOf(char) == -1) {
             var boardCell = $("#player-board #" + i);
@@ -47,7 +54,7 @@ function displayplayerAttacks(board){
 
 function displayEnemyBoard(board){
     var ignoreChar = "xacegikmoqs"
-    for(var i = 0; i < board.length(); i++){
+    for(var i = 0; i < board.length; i++){
         var char = board[i];
         if(ignoreChar.indexOf(char) == -1){
             var boardCell = $("#enemy-board #" + i);

@@ -1,5 +1,5 @@
 .board {
-  float:left;
+  border-radius: 4px;
   font-weight: bold;
   z-index: -50;
   display: inline-block;
@@ -29,7 +29,7 @@
 
 #shipSelection {
   margin-top: 7px;
-  width: 272px;
+  width: 338px;
   float: left;
 }
 

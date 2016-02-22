@@ -1,33 +1,25 @@
-<div class="col-md-8" id="battle">
+<div class="col-md-9" id="battle">
   <div id="info-div">
 
     <div id="messages"></div>
     <div id="btnGiveUp">
-      <%= button_to "Give Up", finish_path(@battle), class: "btn btn-warning", :winner => false,  :remote => true %>
+      <%= button_to "Give Up", finish_path(@battle), class: "btn btn-warning", :winner => false, :remote => true %>
     </div>
   </div>
+  <div class="clearfix"></div>
 
-  <!--<div>
-    <% # = button_to "Give Up", finish_path(@battle), class: "btn btn-lg", :remote => true %>
-  </div>-->
+  <div id="battle-field" class="" data-player-id="player_<%= current_user.id %>"
+       data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
 
-    <div id="battle-field" data-player-id="player_<%= current_user.id %>"
-         data-enemy-id="player_<%= @enemy.id %>" data-battle-id="<%= @battle.id %>">
+    <%= render partial: 'battles/player_board' %>
+    <div id="player-board" class="board">
 
-      <%= render partial: 'battles/player_board' %>
-      <div id="player-board" class="board" >
-
-      </div>
-
-      <div id="enemy-board" class="board" >
-
-      </div>
     </div>
-    <!--
-    <div class="enemy-message well">
-      <% #= render 'show_board' %>
+
+    <div id="enemy-board" class="board">
+
     </div>
-    -->
+  </div>
 
 </div>
 
@@ -50,10 +42,10 @@
     </div> <!-- end chat-history -->
 
     <div class="chat-message clearfix">
-      <%= form_for Message.new , remote: true do |f| %>
-        <%= f.hidden_field :battle_id, :value => @battle.id %>
-        <%= f.text_area :body %>
-        <%= f.submit "Send" %>
+      <%= form_for Message.new, remote: true do |f| %>
+          <%= f.hidden_field :battle_id, :value => @battle.id %>
+          <%= f.text_area :body %>
+          <%= f.submit "Send" %>
       <% end %>
     </div> <!-- end chat-message -->
 
