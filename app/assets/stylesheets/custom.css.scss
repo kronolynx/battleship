@@ -7,10 +7,15 @@ body{
   background-image: asset_data_url('bg.png');
   background-repeat: repeat;
 }
+.table th, td{
+  text-align: center;
+}
 .profile-view{
   height: 280px;
   min-width: 700px;
   max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
   .profile-image{
     display: block;
     width:258px;
@@ -129,6 +134,7 @@ body{
 .people-list {
   width: 260px;
   float: left;
+  margin-bottom: 25px;
 
   *, *:before, *:after {
     box-sizing: border-box;
@@ -364,4 +370,9 @@ body{
   content: " ";
   clear: both;
   height: 0;
+}
+
+.start-battle{
+  margin-left: 15px;
+  margin-top: 8px;
 }

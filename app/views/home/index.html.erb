@@ -11,8 +11,23 @@
         <!-- end user list -->
       </div>
     </div>
-    <div>
-      <button id="button_test">User id <%= current_user.id %></button>
+    <div class="col-md-6">
+      <div class="table-responsive">
+     <table class="table table-condensed table-hover table-striped">
+       <tr>
+         <th>Player</th>
+         <th>Wins</th>
+         <th>Losses</th>
+       </tr>
+       <% @users.order('wins desc').limit(20).each do |user|%>
+       <tr>
+         <td><%= link_to user.username, user_path(user) %></td>
+         <td><%= user.wins %></td>
+         <td><%= user.losses %></td>
+       </tr>
+       <% end %>
+     </table>
+      </div>
     </div>
   </div>
     <%= subscribe_to "/user_#{current_user.id}" %>
