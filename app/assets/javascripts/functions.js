@@ -27,7 +27,7 @@ function displayPlayerShips(board){
 
 function displayplayerAttacks(board){
     var ignoreChar = "xacegikmoqs"
-    for(var i = 0; i < 100; i++) {
+    for(var i = 0; i < board.length(); i++) {
         var char = board[i];
         if (ignoreChar.indexOf(char) == -1) {
             var boardCell = $("#player-board #" + i);
@@ -47,7 +47,7 @@ function displayplayerAttacks(board){
 
 function displayEnemyBoard(board){
     var ignoreChar = "xacegikmoqs"
-    for(var i = 0; i < 100; i++){
+    for(var i = 0; i < board.length(); i++){
         var char = board[i];
         if(ignoreChar.indexOf(char) == -1){
             var boardCell = $("#enemy-board #" + i);
