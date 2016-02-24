@@ -3,8 +3,10 @@ class User::RegistrationsController < Devise::RegistrationsController
   
   def create
     super
-    current_user.online = "online"
-    current_user.save
+    if !current_user.nil?
+      current_user.online = "online"
+      current_user.save
+    end
   end
   protected
   def configure_permitted_parameters
